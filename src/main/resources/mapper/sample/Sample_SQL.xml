@@ -18,7 +18,10 @@
 		]]>
 	</select>
 	
-	<insert id="insertBoard" parameterType="hashmap">
+	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
+		<selectKey keyProperty="IDX" resultType="string" order="BEFORE">
+			SELECT SEQ_SC_BOARD_IDX.NEXTVAL FROM DUAL
+		</selectKey>
 		<![CDATA[
 			INSERT INTO SC_BOARD
 			(
@@ -32,7 +35,7 @@
 			)
 			VALUES
 			(
-				SEQ_SC_BOARD_IDX.NEXTVAL,
+				#{IDX},
 				#{TITLE},
 				#{CONTENTS},
 				0,
@@ -68,4 +71,48 @@
 				IDX = #{IDX}
 		]]>
 	</select>
+	
+	<update id="updateBoard" parameterType="hashmap">
+		<![CDATA[
+			UPDATE SC_BOARD
+			SET
+				TITLE = #{TITLE},
+				CONTENTS = #{CONTENTS}
+			WHERE
+				IDX = #{IDX}
+		]]>
+	</update>
+	
+	<update id="deleteBoard" parameterType="hashmap">
+		<![CDATA[
+			UPDATE SC_BOARD
+			SET
+				DEL_GB = 'Y'
+			WHERE
+				IDX = #{IDX}
+		]]>
+	</update>
+	
+	<insert id="insertFile" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO SC_FILE
+			(
+				IDX,
+				BOARD_IDX,
+				ORIGINAL_FILE_NAME,
+				STORED_FILE_NAME,
+				FILE_SIZE,
+				CREA_ID
+			)
+			VALUES
+			(
+				SEQ_SC_FILE_IDX.NEXTVAL,
+				#{BOARD_IDX},
+				#{ORIGINAL_FILE_NAME},
+				#{STORED_FILE_NAME},
+				#{FILE_SIZE},
+				'Admin'
+			)
+		]]>
+	</insert>
 </mapper>
