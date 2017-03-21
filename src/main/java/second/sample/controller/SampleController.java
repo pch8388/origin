@@ -62,4 +62,39 @@ public class SampleController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value="/sample/openBoardDetail.do")
+	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("/sample/boardDetail");
+		
+		Map<String,Object> map = sampleService.selectBoardDetail(commandMap.getMap());
+		mv.addObject("map",map);
+		
+		return mv;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
