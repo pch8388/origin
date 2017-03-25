@@ -29,7 +29,7 @@
 						<tr>
 							<td>${row.IDX }</td>
 							<td class="title">
-								<a href="#this" id="title">${row.TITLE}</a>
+								<a href="#this" name="title">${row.TITLE}</a>
 								<input type="hidden" id="IDX" value="${row.IDX }">
 							</td>
 							<td>${row.HIT_CNT }</td>
@@ -56,7 +56,7 @@
 				fn_openBoardWrite();
 			});
 			
-			$("a[id='title']").on("click",function(e){ //제목
+			$("a[name='title']").on("click",function(e){ //제목
 				e.preventDefault();
 				fn_openBoardDetail($(this));
 			});

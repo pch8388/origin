@@ -86,10 +86,10 @@ public class SampleController {
 	}
 	
 	@RequestMapping(value="/sample/updateBoard.do")
-	public ModelAndView updateBoard(CommandMap commandMap) throws Exception{
+	public ModelAndView updateBoard(CommandMap commandMap,HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardDetail.do");
 		
-		sampleService.updateBoard(commandMap.getMap());
+		sampleService.updateBoard(commandMap.getMap(),request);
 		
 		mv.addObject("IDX", commandMap.get("IDX"));
 		return mv;

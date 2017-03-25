@@ -42,7 +42,7 @@
 						<c:when test="${fn:length(list) > 0 }">
 							<c:forEach var="row" items="#{list }">
 								<input type="hidden" id="IDX" value="${row.IDX }" />
-								<a href="#this" id="file">${row.ORIGINAL_FILE_NAME }</a>
+								<a href="#this" name="file">${row.ORIGINAL_FILE_NAME }</a>
 								(${row.FILE_SIZE }kb)
 							</c:forEach>
 						</c:when>
@@ -71,7 +71,7 @@
 				fn_openBoardUpdate();
 			});
 			
-			$("a[id='file']").on("click",function(e){ //파일 이름
+			$("a[name='file']").on("click",function(e){ //파일 이름
 				e.preventDefault();
 				fn_downloadFile($(this));
 			});
