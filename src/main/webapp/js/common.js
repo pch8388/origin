@@ -15,6 +15,7 @@ function ComSubmit(opt_formId){
 
   if(this.formId == "commonForm"){
     $("#commonForm")[0].reset();
+    $("#commonForm").empty();
   }
 
   this.setUrl = function setUrl(url){
@@ -40,12 +41,8 @@ function ComAjax(opt_formId){
 	this.param = "";
 	
 	if(this.formId == "commonForm"){
-		var frm = $("#commonForm");
-		if(frm.length > 0){
-			frm.remove();
-		}
-		var str = "<form id='commonForm' name='commonForm'></form>";
-		$('body').append(str);
+		$("#commonForm")[0].reset();
+		$("#commonForm").empty();
 	}
 	
 	this.setUrl = function setUrl(url){
@@ -56,7 +53,7 @@ function ComAjax(opt_formId){
 		gfv_ajaxCallback = callBack;
 	};
 	
-	this.addParam = function addPram(key,value){
+	this.addParam = function addParam(key,value){
 		this.param = this.param + "&" + key + "=" + value;
 	};
 	
@@ -68,13 +65,12 @@ function ComAjax(opt_formId){
 			url : this.url,
 			type : "POST",
 			data : this.param,
-			async : false,
-			success : function(data,status){
+			success : function(data){
 				if(typeof(gfv_ajaxCallback) == "function"){
 					gfv_ajaxCallback(data);
 				}
 				else{
-					eval(gfv_ajaxCallback + "(data)");
+					eval(gfv_ajaxCallback + "(data);");
 				}
 			}
 		});
@@ -83,12 +79,12 @@ function ComAjax(opt_formId){
 
 var gfv_pageIndex = null;
 var gfv_eventName = null;
-function gfv_renderPaging(params){
+function gfn_renderPaging(params){
 	var divId = params.divId;  //페이징 태그가 그려질 div
 	gfv_pageIndex = params.pageIndex;  //현재 위치가 저장될 input 태그 
 	var totalCount = params.totalCount;  //전체 조회 건수
 	var currentIndex = $("#"+params.pageIndex).val();  //현재 위치
-	if($("#"+params.pageIndex).length == 0 || gfn_isNull(currentIdex) == true){
+	if($("#"+params.pageIndex).length == 0 || gfn_isNull(currentIndex) == true){
 		currentIndex = 1;
 	}
 	
@@ -97,7 +93,7 @@ function gfv_renderPaging(params){
 		recordCount = 20;
 	}
 	var totalIndexCount = Math.ceil(totalCount / recordCount);    //전체 인덱스 수 
-	gfv_eventNmae = params.eventName;
+	gfv_eventName = params.eventName;
 	
 	$("#"+divId).empty();
 	var preStr = "";
@@ -106,21 +102,22 @@ function gfv_renderPaging(params){
 	
 	var first = (parseInt((currentIndex-1) / 10) * 10) + 1;
 	var last = (parseInt(totalIndexCount/10) == parseInt(currentIndex/10)) ? totalIndexCount%10 : 10;
-	var prev = (parseInt((currentIndex-1)/10)*10) - 9 > 0 ? (parseInt((currentIndex-1)/10)*10) - 9 : 1;
-	var next = (parseInt((currentIndex-1)/10)+1) * 10 + 1 < totalIndexCount ? (parseInt((currentIndex-1)/10)+1) * 10 + 1 : tatalIndexCount;
+	var prev = (parseInt((currentIndex-1)/10)*10) -9 > 0 ? (parseInt((currentIndex-1)/10)*10) - 9 : 1;
+	var next = (parseInt((currentIndex-1)/10)+1) * 10 + 1 < totalIndexCount ? (parseInt((currentIndex-1)/10)+1) * 10 + 1 : totalIndexCount;
 	
 	if(totalIndexCount > 10){  //전체 인덱스가 10이 넘을 경우, 맨앞, 앞 태그 작성
-		preStr += "<a href='#this' class='pad_5' onclick='_movePage(1)'>[<<]</a>"+
-				"<a href='#this' class='pad_5' onclick='_movePage("+prev+")'>[<]</a>";
+		preStr += "<a href='#this' class='pad_5' onclick='_movePage(1)'>[<<]</a>" +
+			"<a href='#this' class='pad_5' onclick='_movePage("+prev+")'>[<]</a>";
 	}
-	else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을경우, 맨앞 태그 작성
+	else if(totalIndexCount <= 10 && totalIndexCount > 1){  //전체 인덱스가 10보다 작을경우, 맨앞태그 작성
 		preStr += "<a href='#this' class='pad_5' onclick='_movePage(1)'>[<<]</a>";
 	}
-	if(totalIndexCount > 10){ //전체 인덱스가 10이 넘을 경우, 맨뒤, 뒤 태그 작성
-		postStr += "<a href='#this' class='pad_5' onclick='_movePage("+next+")'>[>]</a>"+
-				"<a href='#this' class='pad_5' onclick='_movePage("+totalIndexCount+")'>[>>]</a>";
+	
+	if(totalIndexCount > 10){ //전체인덱스가 10이 넘을 경우, 맨뒤 , 뒤 태그작성
+		postStr += "<a href='#this' class='pad_5' onclick='_movePage("+next+")'>[>]</a>" +
+			"<a href='#this' class='pad_5' onclick='_movePage("+totalIndexCount+")'>[>>]</a>";
 	}
-	else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을 경우 맨뒤 태그 작성
+	else if(totalIndexCount <= 10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을 경우 맨뒤 태그작성
 		postStr += "<a href='#this' class='pad_5' onclick='_movePage("+totalIndexCount+")'>[>>]</a>";
 	}
 	
