@@ -1,2 +1,3 @@
 <%@ page pageEncoding="utf-8" %>
+<script src="<c:url value='/js/bootstrap.js' />" ></script>
 <form id="commonForm" name="commonForm"></form>
