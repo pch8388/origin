@@ -7,36 +7,31 @@
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 </head>
 <body>
-	<table class="board_view">
-		<colgroup>
-			<col width="15%"/>
-			<col width="35%"/>
-			<col width="15%"/>
-			<col width="35%"/>		
-		</colgroup>
-		<caption>게시글 상세</caption>
+<div class="container">
+	<table class="table">
+		<h2>게시글 상세</h2>
 		<tbody>
 			<tr>
-				<th scope="row">글 번호</th>
+				<th class="active">글 번호</th>
 				<td>${map.IDX }</td>
-				<th scope="row">조회수</th>
+				<th class="active">조회수</th>
 				<td>${map.HIT_CNT }</td>
 			</tr>
 			<tr>
-				<th scope="row">작성자</th>
+				<th class="active">작성자</th>
 				<td>${map.CREA_ID }</td>
-				<th scope="row">작성시간</th>
+				<th class="active">작성시간</th>
 				<td>${map.CREA_DTM }</td>
 			</tr>
 			<tr>
-				<th scope="row">제목</th>
+				<th class="active">제목</th>
 				<td colspan="3">${map.TITLE }</td>
 			</tr>
 			<tr>
 				<td colspan="4">${map.CONTENTS }</td>
 			</tr>
 			<tr>
-				<th scope="row">첨부파일</th>
+				<th class="active">첨부파일</th>
 				<td colspan="3">
 					<c:choose>
 						<c:when test="${fn:length(list) > 0 }">
@@ -55,9 +50,9 @@
 		</tbody>
 	</table>
 	
-	<a href="#this" class="btn" id="list">목록으로</a>
-	<a href="#this" class="btn" id="update">수정하기</a>
-	
+	<a href="#this" class="btn btn-default pull-right" id="list">목록으로</a>
+	<a href="#this" class="btn btn-default" id="update">수정하기</a>
+</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">
 		$(document).ready(function(){

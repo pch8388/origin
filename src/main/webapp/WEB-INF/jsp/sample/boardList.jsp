@@ -22,7 +22,7 @@
 		</tbody>
 	</table>
 	
-	<div id="PAGE_NAVI"></div>
+	<div id="PAGE_NAVI" class="text-center"></div>
 	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
 	
 	<br/>

@@ -7,20 +7,20 @@
 </head>
 <body>
 	<form id="frm" name="frm" enctype="multipart/form-data">
-		<table class="board_view">
-			<colgroup>
-				<col width="15%" />
-				<col width="*" />
-			</colgroup>
-			<caption>게시글 작성</caption>
+	<div class="container">
+		<table class="table">
+			<h2>게시글 작성</h2>
 			<tbody>
 				<tr>
-					<th scope="row">제목</th>
-					<td><input type="text" id="TITLE" name="TITLE" class="wdp_90"/></td>
+					<th class="active">제목</th>
+					<td>
+					<div class="form-group">
+					<input type="text" id="TITLE" name="TITLE" class="form-control"/></div></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="view_text">
-						<textarea rows="20" cols="100" title="내용" id="CONTENTS" name="CONTENTS"></textarea>
+					<div class="form-group">
+						<textarea rows="20" class="form-control" title="내용" id="CONTENTS" name="CONTENTS"></textarea></div>
 					</td>
 				</tr>
 			</tbody>
@@ -28,14 +28,15 @@
 		<div id="fileDiv">
 			<p>
 				<input type="file" id="file" name="file_0" />
-				<a href="#this" class="btn" id="delete" name="delete">삭제</a>
+				<a href="#this" class="btn btn-default" id="delete" name="delete">삭제</a>
 			</p>
 		</div>
 		<br/><br/>
 		
-		<a href="#this" class="btn" id="addFile">파일 추가</a>
-		<a href="#this" class="btn" id="write">작성하기</a>
-		<a href="#this" class="btn" id="list">목록으로</a>
+		<a href="#this" class="btn btn-default" id="addFile">파일 추가</a>
+		<a href="#this" class="btn btn-default pull-right" id="write">작성하기</a>
+		<a href="#this" class="btn btn-default pull-right" id="list">목록으로</a>
+	</div>
 	</form>
 	
 	<%@ include file = "/WEB-INF/include/include-body.jspf" %>
