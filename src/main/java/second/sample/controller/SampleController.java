@@ -17,21 +17,20 @@ import second.common.common.CommandMap;
 import second.sample.service.SampleService;
 
 @Controller
-@RequestMapping(value="/sample")
 public class SampleController {
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Resource(name="sampleService")
 	private SampleService sampleService;
 	
-	@RequestMapping(value="/openBoardList.do")
+	@RequestMapping(value="/sample/openBoardList.do")
 	public ModelAndView openBoardList(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("/sample/boardList");
 		
 		return mv;
 	}
 	
-	@RequestMapping(value="/selectBoardList.do")
+	@RequestMapping(value="/sample/selectBoardList.do")
 	public ModelAndView selectBoardList(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("jsonView");
 		
@@ -47,7 +46,7 @@ public class SampleController {
 	}
 	
 	
-	@RequestMapping(value="/testMapArgumentResolver.do")
+	@RequestMapping(value="/sample/testMapArgumentResolver.do")
 	public ModelAndView testMapArgumentResolver(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("");
 		
@@ -62,14 +61,14 @@ public class SampleController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/openBoardWrite.do")
+	@RequestMapping(value="/sample/openBoardWrite.do")
 	public ModelAndView openBoardWrite(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("/sample/boardWrite");
 		
 		return mv;
 	}
 	
-	@RequestMapping(value="/insertBoard.do")
+	@RequestMapping(value="/sample/insertBoard.do")
 	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
 		
@@ -78,7 +77,7 @@ public class SampleController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/openBoardDetail.do")
+	@RequestMapping(value="/sample/openBoardDetail.do")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("/sample/boardDetail");
 		
