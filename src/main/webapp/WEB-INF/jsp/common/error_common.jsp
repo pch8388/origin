@@ -3,10 +3,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<%@ include file="/WEB-INF/include/include-header.jspf" %>
 </head>
 <body>
 에러발생
+
+<h4>${exception.getMessage() }</h4>
+
+<ul>
+	<c:forEach items="${exception.getStackTrace() }" var="stack">
+		<li>${stack.toString() }</li>
+	</c:forEach>
+</ul>
 </body>
 </html>

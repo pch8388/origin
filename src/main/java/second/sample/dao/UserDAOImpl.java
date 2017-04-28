@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import second.sample.dto.LoginDTO;
-import second.sample.member.UserVO;
+import second.sample.user.UserVO;
 
 @Repository("userDAO")
 public class UserDAOImpl implements UserDAO {

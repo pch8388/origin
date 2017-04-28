@@ -3,7 +3,7 @@
 
 <mapper namespace="member">
 	
-	<select id="login" parameterType="second.sample.member.UserVO" resultType="second.sample.member.UserVO">
+	<select id="login" parameterType="second.sample.user.UserVO" resultType="second.sample.user.UserVO">
 	<![CDATA[
 		SELECT 
 			id,

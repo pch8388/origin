@@ -1,4 +1,4 @@
-package second.sample.member;
+package second.sample.user;
 
 public class UserVO {
 

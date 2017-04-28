@@ -1,7 +1,7 @@
 package second.sample.service;
 
 import second.sample.dto.LoginDTO;
-import second.sample.member.UserVO;
+import second.sample.user.UserVO;
 
 
 public interface UserService {

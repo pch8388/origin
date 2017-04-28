@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import second.sample.dto.LoginDTO;
-import second.sample.member.UserVO;
 import second.sample.service.UserService;
+import second.sample.user.UserVO;
 
 @Controller
 @RequestMapping("/user")
