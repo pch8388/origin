@@ -100,19 +100,19 @@
 		
 		function fn_openBoardList(){
 			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/sample/openBoardList.do' />");
+			comSubmit.setUrl("<c:url value='/sample/openBoardList' />");
 			comSubmit.submit();
 		}
 		
 		function fn_updateBoard(){
 			var comSubmit = new ComSubmit("frm");
-			comSubmit.setUrl("<c:url value='/sample/updateBoard.do' />");
+			comSubmit.setUrl("<c:url value='/sample/updateBoard' />");
 			comSubmit.submit();
 		}
 		
 		function fn_deleteBoard(){
 			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/sample/deleteBoard.do' />");
+			comSubmit.setUrl("<c:url value='/sample/deleteBoard' />");
 			comSubmit.addParam("IDX",$("#IDX").val());
 			comSubmit.submit();
 		}
