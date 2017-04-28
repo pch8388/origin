@@ -29,12 +29,15 @@
             <mvc:mapping path="/user/loginPost"/>
             <bean id="loginInterceptor" class="second.common.interceptor.LoginInterceptor"></bean>
         </mvc:interceptor>
-    </mvc:interceptors>
     
-    <mvc:interceptors>
     	<mvc:interceptor>
     		<mvc:mapping path="/**"/>
     		<bean id="loggerInterceptor" class="second.common.logger.LoggerInterceptor" />
+    	</mvc:interceptor>
+    	
+    	<mvc:interceptor>
+    		<mvc:mapping path="/sample/openBoardWrite"/>
+    		<bean id="authInterceptor" class="second.common.interceptor.AuthInterceptor" />
     	</mvc:interceptor>
     </mvc:interceptors>
      
