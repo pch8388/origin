@@ -49,7 +49,20 @@
 	});
 	
 	function fn_idChecker(){
-		
+		var id = $("#id").val();
+		$.ajax({
+			type : "GET",
+			url : "/user/idCheck",
+			data : {"id":id},
+			success : function(data){
+				if(data.id){
+					alert("사용할 수 없는 아이디입니다.");
+					document.frm.reset();
+				}else{
+					alert("사용 가능한 아이디입니다.");
+				}
+			}
+		});
 	}
 	
 	function fn_join(){

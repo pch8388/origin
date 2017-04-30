@@ -9,5 +9,7 @@ public interface UserService {
 	public UserVO login(LoginDTO dto) throws Exception;
 
 	public void join(UserVO vo) throws Exception;
+
+	public UserVO idCheck(String id) throws Exception;
 	
 }

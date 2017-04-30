@@ -23,4 +23,8 @@ public class UserDAOImpl implements UserDAO {
 		sqlSession.insert("member.join", vo);
 	}
 
+	@Override
+	public UserVO idCheck(String id) throws Exception {
+		return sqlSession.selectOne("member.idCheck", id);
+	}
 }

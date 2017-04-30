@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import second.sample.dto.LoginDTO;
 import second.sample.service.UserService;
@@ -46,5 +48,18 @@ public class UserController {
 		service.join(vo);
 		
 		return "redirect:/user/login";
+	}
+	
+	@RequestMapping(value="/idCheck",method=RequestMethod.GET)
+	public ModelAndView idCheck(@RequestParam("id") String id) throws Exception{
+		ModelAndView mav = new ModelAndView("jsonView");
+		
+		UserVO vo = service.idCheck(id);
+		if(vo.getId() == null){
+			mav.addObject("id", false);
+		}else{
+			mav.addObject("id", true);
+		}
+		return mav;
 	}
 }

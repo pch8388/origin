@@ -33,4 +33,15 @@
 		)
 	]]>
 	</insert>
+	
+	<select id="idCheck" resultType="second.sample.user.UserVO">
+	<![CDATA[
+		SELECT
+			id
+		FROM
+			SC_MEMBER
+		WHERE
+			id = #{id}
+	]]>
+	</select>
 </mapper>

@@ -24,4 +24,9 @@ public class UserServiceImpl implements UserService {
 		dao.join(vo);
 	}
 
+	@Override
+	public UserVO idCheck(String id) throws Exception {
+		return dao.idCheck(id);
+	}
+
 }
