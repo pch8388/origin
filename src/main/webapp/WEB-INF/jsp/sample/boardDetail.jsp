@@ -51,7 +51,9 @@
 	</table>
 	
 	<a href="#this" class="btn btn-default pull-right" id="list">목록으로</a>
-	<a href="#this" class="btn btn-default" id="update">수정하기</a>
+	<c:if test="${login.id == map.CREA_ID }">
+		<a href="#this" class="btn btn-default" id="update">수정하기</a>
+	</c:if>
 </div>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">
