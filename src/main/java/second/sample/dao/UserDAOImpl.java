@@ -18,4 +18,9 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne("member.login", dto);
 	}
 
+	@Override
+	public void join(UserVO vo) throws Exception {
+		sqlSession.insert("member.join", vo);
+	}
+
 }

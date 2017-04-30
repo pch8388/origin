@@ -35,4 +35,16 @@ public class UserController {
 		
 		model.addAttribute("userVO", vo);
 	}
+	
+	@RequestMapping(value="/join",method=RequestMethod.GET)
+	public void joinGET(@ModelAttribute("vo") UserVO vo){
+		
+	}
+	
+	@RequestMapping(value="/joinPost",method=RequestMethod.POST)
+	public String joinPOST(UserVO vo,Model model) throws Exception{
+		service.join(vo);
+		
+		return "redirect:/user/login";
+	}
 }

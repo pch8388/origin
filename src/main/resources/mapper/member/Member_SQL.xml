@@ -16,4 +16,21 @@
 	]]>
 	</select>
 
+	<insert id="join" parameterType="second.sample.user.UserVO">
+	<![CDATA[
+		INSERT INTO SC_MEMBER
+		(
+			ID,
+			PW,
+			NAME
+		
+		)
+		VALUES
+		(
+			#{id},
+			#{pw},
+			#{name}
+		)
+	]]>
+	</insert>
 </mapper>
