@@ -8,23 +8,23 @@
 <body>
 	<form id="frm" name="frm" enctype="multipart/form-data">
 	<div class="container">
-		<table class="table">
-			<h2>게시글 작성</h2>
-			<tbody>
-				<tr>
-					<th class="active">제목</th>
-					<td>
-					<div class="form-group">
-					<input type="text" id="TITLE" name="TITLE" class="form-control"/></div></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="view_text">
-					<div class="form-group">
-						<textarea rows="20" class="form-control" title="내용" id="CONTENTS" name="CONTENTS"></textarea></div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<h2>게시글 작성</h2>
+		<div class="row">
+			<div class="col-xs-8">
+				<div class="form-group">
+					<label for="TITLE">제목</label>
+					<input type="text" id="TITLE" name="TITLE" class="form-control"/></div>
+			</div>
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label for="id">작성자</label>
+					<input type="text" id="id" name="id" class="form-control" value="${login.id }" readonly />
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<textarea rows="20" class="form-control" title="내용" id="CONTENTS" name="CONTENTS"></textarea></div>
+			
 		<div id="fileDiv">
 			<p>
 				<input type="file" id="file" name="file_0" />

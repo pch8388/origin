@@ -13,6 +13,7 @@
 			<tr>
 				<th>글번호</th>
 				<th>제목</th>
+				<th>작성자</th>
 				<th>조회수</th>
 				<th>작성일</th>
 			</tr>
@@ -88,6 +89,7 @@
 									"<a href='#this' name='title'>" + value.TITLE + "</a>" +
 									"<input type='hidden' name='title' id='IDX' value=" + value.IDX + ">" +
 								"</td>" +
+								"<td>" + value.CREA_ID + "</td>" +
 								"<td>" + value.HIT_CNT + "</td>" +
 								"<td>" + value.CREA_DTM + "</td>" +
 							"</tr>";
