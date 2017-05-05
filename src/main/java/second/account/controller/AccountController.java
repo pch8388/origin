@@ -24,6 +24,15 @@ public class AccountController {
 	
 	@RequestMapping("/account_save")
 	public String accountSave(AccountDTO dto,Model model) throws Exception{
+		if(dto.getCash()==null || dto.getCash()==""){
+			dto.setCash("0");
+		}
+		if(dto.getCard()==null || dto.getCard()==""){
+			dto.setCard("0");
+		}
+		if(dto.getMemo()==null || dto.getMemo()==""){
+			dto.setMemo(" ");
+		}
 		service.accountSave(dto);
 		return "redirect:/account/account_book";
 	}

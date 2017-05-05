@@ -39,6 +39,7 @@
     	
     	<mvc:interceptor>
     		<mvc:mapping path="/sample/openBoardWrite"/>
+    		<mvc:mapping path="/account/account_book"/>
     		<bean id="authInterceptor" class="second.common.interceptor.AuthInterceptor" />
     	</mvc:interceptor>
     </mvc:interceptors>

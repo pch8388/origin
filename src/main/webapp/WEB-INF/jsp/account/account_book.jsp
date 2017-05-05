@@ -23,14 +23,26 @@
 					<td><input type="text" name="use_detail" /></td>
 					<td><input type="number" name="cash" /></td>
 					<td><input type="number" name="card" /></td>
-					<td><input type="text" name="classification" /></td>   <!-- dropdown 검색하고 구현 -->
-					<td><input type="text" name="memo" /></td> 
+					<td>
+					<select name="classification">
+						<option value="식비">식비</option>
+						<option value="주거비">주거비</option>
+						<option value="통신비">통신비</option>
+						<option value="생활용품">생활용품</option>
+						<option value="의복/미용">의복/미용</option>
+						<option value="건강/문화">건강/문화</option>
+						<option value="교육/육아">교육/육아</option>
+						<option value="교통/차량">교통/차량</option>
+						<option value="경조사/회비">경조사/회비</option>
+						<option value="세금/이자">세금/이자</option>
+						<option value="용돈/기타">용돈/기타</option>
+					</select></td>
+					<td><input type="text" name="memo" />
+					<input type="hidden" name="id" value="${login.id }" /></td> 
 				</tr>
 			</tbody>
-			<tfoot>
-				<a href="#this" id="save" class="btn btn-default">저장하기</a>
-			</tfoot>
 		</table>
+		<a href="#this" id="save" class="btn btn-default">저장하기</a>
 	</form>
 	</div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>

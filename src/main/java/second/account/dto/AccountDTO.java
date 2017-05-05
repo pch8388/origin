@@ -4,12 +4,18 @@ public class AccountDTO {
 
 	private String account_date;    //날짜
 	private String use_detail;    //사용내역
-	private int cash;         //현금
-	private int card;         //카드
+	private String cash;         //현금
+	private String card;         //카드
 	private String classification;  //분류
 	private String memo;           //메모
-		
+	private String id;
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getAccount_date() {
 		return account_date;
 	}
@@ -22,17 +28,16 @@ public class AccountDTO {
 	public void setUse_detail(String use_detail) {
 		this.use_detail = use_detail;
 	}
-	
-	public int getCash() {
+	public String getCash() {
 		return cash;
 	}
-	public void setCash(int cash) {
+	public void setCash(String cash) {
 		this.cash = cash;
 	}
-	public int getCard() {
+	public String getCard() {
 		return card;
 	}
-	public void setCard(int card) {
+	public void setCard(String card) {
 		this.card = card;
 	}
 	public String getClassification() {

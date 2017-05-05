@@ -11,7 +11,8 @@
 				cash,
 				card,
 				classification,
-				memo
+				memo,
+				id
 			)	
 			VALUES
 			(
@@ -20,7 +21,8 @@
 				#{cash},
 				#{card},
 				#{classification},
-				#{memo}
+				#{memo},
+				#{id}
 			)
 		]]>
 	</insert>
