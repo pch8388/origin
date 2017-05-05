@@ -18,16 +18,14 @@
 				<th>태그</th>
 			</thead>
 			<tbody>
-				<c:forEach var="i" begin="0" end="14">
-					<tr>
-						<td><input type="date" name="account_date" /></td>
-						<td><input type="text" name="use_detail" /></td>
-						<td><input type="number" name="cash" /></td>
-						<td><input type="number" name="card" /></td>
-						<td><input type="text" name="classification" /></td>   <!-- dropdown 검색하고 구현 -->
-						<td><input type="text" name="memo" /></td> 
-					</tr>
-				</c:forEach>
+				<tr>
+					<td><input type="date" name="account_date" /></td>
+					<td><input type="text" name="use_detail" /></td>
+					<td><input type="number" name="cash" /></td>
+					<td><input type="number" name="card" /></td>
+					<td><input type="text" name="classification" /></td>   <!-- dropdown 검색하고 구현 -->
+					<td><input type="text" name="memo" /></td> 
+				</tr>
 			</tbody>
 			<tfoot>
 				<a href="#this" id="save" class="btn btn-default">저장하기</a>

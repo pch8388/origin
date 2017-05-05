@@ -4,8 +4,8 @@ public class AccountDTO {
 
 	private String account_date;    //날짜
 	private String use_detail;    //사용내역
-	private Integer cash;         //현금
-	private Integer card;         //카드
+	private int cash;         //현금
+	private int card;         //카드
 	private String classification;  //분류
 	private String memo;           //메모
 		
@@ -22,16 +22,17 @@ public class AccountDTO {
 	public void setUse_detail(String use_detail) {
 		this.use_detail = use_detail;
 	}
-	public Integer getCash() {
+	
+	public int getCash() {
 		return cash;
 	}
-	public void setCash(Integer cash) {
+	public void setCash(int cash) {
 		this.cash = cash;
 	}
-	public Integer getCard() {
+	public int getCard() {
 		return card;
 	}
-	public void setCard(Integer card) {
+	public void setCard(int card) {
 		this.card = card;
 	}
 	public String getClassification() {
