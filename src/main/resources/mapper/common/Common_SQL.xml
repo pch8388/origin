@@ -32,7 +32,7 @@
 				)AA
 			)AAA
 			WHERE
-				AAA.RNUM BETWEEN #{START} AND #{END}
+				AAA.RNUM BETWEEN #{pageStart} AND #{perPageNum}
 		]]>
 	</sql>
 </mapper>

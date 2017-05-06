@@ -42,7 +42,7 @@ public class SampleDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectFileList(Map<String, Object> map) throws Exception{
-		return (List<Map<String,Object>>)selectList("sample.selectFileList",map);
+		return selectList("sample.selectFileList",map);
 	}
 
 	public void deleteFileList(Map<String, Object> map) throws Exception{

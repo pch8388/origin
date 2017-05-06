@@ -26,4 +26,22 @@
 			)
 		]]>
 	</insert>
+	
+	<select id="accountList" resultType="second.account.dto.AccountDTO">
+		<![CDATA[
+			SELECT
+				account_date,
+				use_detail,
+				cash,
+				card,
+				classification,
+				memo,
+				id
+			FROM
+				sc_account
+			WHERE
+				id = #{id}
+			ORDER BY account_date desc
+		]]>
+	</select>
 </mapper>
