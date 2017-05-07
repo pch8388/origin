@@ -1,5 +1,6 @@
 package second.account.controller;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -62,9 +63,14 @@ public class AccountController {
 		
 		UserVO vo = (UserVO)session.getAttribute("login");
 		List<AccountDTO> list = service.accountList(vo);
-		Map<String,String> map = CommonUtils.accountSum(list);
-
-		mv.addObject(map);
+		Map<String,Object> map = CommonUtils.accountSum(list);
+		
+		Iterator<String> it = map.keySet().iterator();
+		while(it.hasNext()){
+			String key = it.next();
+			mv.addObject(key, map.get(key));
+		}
+		
 		return mv;
 	}
 }
