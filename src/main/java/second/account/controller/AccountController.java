@@ -1,6 +1,7 @@
 package second.account.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import second.account.dto.AccountDTO;
 import second.account.service.AccountService;
+import second.common.util.CommonUtils;
 import second.sample.user.UserVO;
 
 @Controller
@@ -47,5 +50,21 @@ public class AccountController {
 		List<AccountDTO> list = service.accountList(vo);
 		
 		model.addAttribute("list", list);
+	}
+	@RequestMapping("/account_chart")
+	public void accountChart(@ModelAttribute("vo")UserVO vo) throws Exception{
+		
+	}
+	
+	@RequestMapping("/json")
+	public ModelAndView accountChartJson(HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		UserVO vo = (UserVO)session.getAttribute("login");
+		List<AccountDTO> list = service.accountList(vo);
+		Map<String,String> map = CommonUtils.accountSum(list);
+
+		mv.addObject(map);
+		return mv;
 	}
 }

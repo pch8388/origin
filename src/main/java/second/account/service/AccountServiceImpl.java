@@ -25,4 +25,5 @@ public class AccountServiceImpl implements AccountService {
 	public List<AccountDTO> accountList(UserVO vo) throws Exception{
 		return dao.accountList(vo);
 	}
+
 }
