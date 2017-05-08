@@ -9,7 +9,14 @@ public class AccountDTO {
 	private String classification;  //분류
 	private String memo;           //메모
 	private String id;
+	private int money;
 	
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
 	public String getId() {
 		return id;
 	}

@@ -24,4 +24,9 @@ public class AccountDAOImpl implements AccountDAO {
 	public List<AccountDTO> accountList(UserVO vo) throws Exception {
 		return sqlSession.selectList("account.accountList", vo);
 	}
+
+	@Override
+	public List<AccountDTO> accountListSum(UserVO vo) throws Exception {
+		return sqlSession.selectList("account.accountListSum", vo);
+	}
 }

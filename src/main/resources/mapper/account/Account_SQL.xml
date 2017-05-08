@@ -44,4 +44,17 @@
 			ORDER BY account_date desc
 		]]>
 	</select>
+	
+	<select id="accountListSum" resultType="second.account.dto.AccountDTO">
+		<![CDATA[
+			SELECT
+				classification,sum(cash+card) money
+			FROM 
+				sc_account
+			WHERE
+				id=#{id}
+			GROUP BY classification
+			ORDER BY classification
+		]]>
+	</select>
 </mapper>

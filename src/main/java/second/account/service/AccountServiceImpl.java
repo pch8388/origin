@@ -26,4 +26,9 @@ public class AccountServiceImpl implements AccountService {
 		return dao.accountList(vo);
 	}
 
+	@Override
+	public List<AccountDTO> accountListSum(UserVO vo) throws Exception {
+		return dao.accountListSum(vo);
+	}
+
 }

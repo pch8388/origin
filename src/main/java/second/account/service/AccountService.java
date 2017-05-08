@@ -11,4 +11,6 @@ public interface AccountService {
 
 	public List<AccountDTO> accountList(UserVO vo)throws Exception;
 
+	public List<AccountDTO> accountListSum(UserVO vo) throws Exception;
+
 }

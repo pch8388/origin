@@ -16,12 +16,14 @@
     google.charts.setOnLoadCallback(drawChart);
       
     function drawChart() {
+      var id = "${login.id}";
       var jsonData = $.ajax({
-          url: "/account/json",
+          url: "<c:url value='/account/account_chart_draw' />",
+          data: {"id":id},
           dataType: "json",
           async: false
           }).responseText;
-          
+          console.log(jsonData);
       // Create our data table out of JSON data loaded from server.
       var data = new google.visualization.DataTable(jsonData);
 
