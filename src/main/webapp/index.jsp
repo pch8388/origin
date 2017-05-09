@@ -104,7 +104,7 @@
 	  <section id="about" class="about-section">
 	  	<div class="row">
 	  		<div class="col-md-6 col-sm-12 col-xs-12">
-              <img class="img-responsive" src="images/bg/me.jpg" draggable="false" alt="">
+              <img class="img-responsive" src="" draggable="false" alt="">
             </div>
                 
             <div class="col-md-6 col-sm-12 col-xs-12">
