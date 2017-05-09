@@ -17,23 +17,7 @@
 				<th>태그</th>
 			</thead>
 			<tbody>
-				<c:choose>
-					<c:when test="${fn:length(list)>0 }">
-						<c:forEach items="${list }" var="row">
-							<tr>
-								<td>${row.account_date }</td>
-								<td>${row.use_detail }</td>
-								<td>${row.cash }</td>
-								<td>${row.card }</td>
-								<td>${row.classification }</td>
-								<td>${row.memo }</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr><td colspan="6">조회된 결과가 없습니다.</td></tr>
-					</c:otherwise>
-				</c:choose>
+				
 			</tbody>
 		</table>
 	
@@ -42,7 +26,30 @@
 	</div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <script type="text/javascript">
+	$(document).ready(function(){
+		fn_accountList();
+	});
 	
+	function fn_accountList(){
+		var body = $("table>tbody");
+		var str = "";
+		$.ajax({
+			url:"/account/account_list",
+			async:false,
+			success: $.each(data.list,function(key,value){
+				str += "<tr>" +
+							"<td>" + value.account_date + "</td>" +
+							"<td>" + value.use_detail + "</td>" +
+							"<td>" + value.cash + "</td>" +
+							"<td>" + value.card + "</td>" +
+							"<td>" + value.classification + "</td>" +
+							
+						"</tr>";
+			});
+			console.log(str);
+			body.append(str);
+		});
+	}
 </script>
 </body>
 </html>

@@ -4,8 +4,40 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    
+    // Load the Visualization API and the piechart package.
+    google.charts.load('current', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+      
+    function drawChart() {
+      var id = "${login.id}";
+      var jsonData = $.ajax({
+          url: "<c:url value='/account/account_chart_draw' />",
+          data: {"id":id},
+          dataType: "json",
+          async: false
+          }).responseText;
+          console.log(jsonData);
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 1000, height: 400});
+    }
+	</script>
 </head>
 <body>
+
+<!--Div that will hold the pie chart-->
+<div class="container">
+<div id="chart_div"></div></div>
 	<div class="container">
 	<form id="frm" name="frm">
 		<table class="table table-bordered">
@@ -44,6 +76,41 @@
 		</table>
 		<a href="#this" id="save" class="btn btn-default">저장하기</a>
 	</form>
+	</div>
+	
+		<div class="container">
+		<table class="table table-bordered">
+			<thead>
+				<th>날짜</th>
+				<th>사용내역</th>
+				<th>현금</th>
+				<th>카드</th>
+				<th>분류</th>
+				<th>태그</th>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${fn:length(list)>0 }">
+						<c:forEach items="${list }" var="row">
+							<tr>
+								<td>${row.account_date }</td>
+								<td>${row.use_detail }</td>
+								<td>${row.cash }</td>
+								<td>${row.card }</td>
+								<td>${row.classification }</td>
+								<td>${row.memo }</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr><td colspan="6">조회된 결과가 없습니다.</td></tr>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+		</table>
+	
+	
+		<br/>
 	</div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <script type="text/javascript">

@@ -131,10 +131,24 @@
 			e.preventDefault();
 			fn_login();
 		});
+		$("a[name='accountbook']").on("click",function(e){
+			e.preventDefault();
+			fn_accountbook();
+		});
+		$("a[name='board']").on("click",function(e){
+			e.preventDefault();
+			fn_board();
+		});
 	});
 	
 	function fn_login(){
 		location.href="/user/login";
+	}
+	function fn_accountbook(){
+		window.open("/account/account_book");
+	}
+	function fn_board(){
+		window.open("/sample/openBoardList");
 	}
 </script>
 </body>

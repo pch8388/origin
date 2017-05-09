@@ -29,8 +29,11 @@ public class AccountController {
 	private AccountService service;
 	
 	@RequestMapping("/account_book")
-	public void accountBook(@ModelAttribute("dto")AccountDTO dto)throws Exception{
+	public void accountBook(@ModelAttribute("dto")AccountDTO dto,HttpSession session,Model model)throws Exception{
+		UserVO vo = (UserVO)session.getAttribute("login");
+		List<AccountDTO> list = service.accountList(vo);
 		
+		model.addAttribute("list", list);
 	}
 	
 	@RequestMapping("/account_save")
