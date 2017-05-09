@@ -26,6 +26,9 @@
 		<div class="col-xs-4">
 			<a href="#this" class="btn btn-primary btn-block btn-flat" id="login">Sign In</a>
 		</div>
+		<div class="col-xs-4">
+			<a href="#this" class="btn btn-primary btn-block btn-flat" id="join">Join</a>
+		</div>
 	</div>
 	</form>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
@@ -35,12 +38,21 @@
 				e.preventDefault();
 				fn_loginForm();
 			});
+			
+			$("#join").on("click",function(e){
+				e.preventDefault();
+				fn_joinForm();
+			});
 		});
 		
 		function fn_loginForm(){
 			var comSubmit = new ComSubmit("frm");
 			comSubmit.setUrl("<c:url value='/user/loginPost' />");
 			comSubmit.submit();
+		}
+		
+		function fn_joinForm(){
+			location.href="/user/join";
 		}
 	</script>
 </body>

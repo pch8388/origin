@@ -60,13 +60,11 @@
                                           </li>
                                           <li><a class="smoth-scroll" href="#about">About</a>
                                           </li>
-                                          <li><a class="smoth-scroll" href="#portfolio">Portfolio</a>
+                                          <li><a class="smoth-scroll" href="#accountbook" name="accountbook">AccountBook</a>
                                           </li>
-                                          <li><a class="smoth-scroll" href="#testimonials">Testimonial</a>
-                                          </li>
-                                          <li><a class="smoth-scroll" href="#services">services</a>
-                                          </li>
-                                          <li><a class="smoth-scroll" href="#contact">Contact</a>
+                                          <li><a class="smoth-scroll" href="#board" name="board">Board</a>
+                                          </li>                                   
+                                          <li><a class="smoth-scroll" href="#login" name="login">LogIn</a>
                                           </li>
                                       </ul>
                                   </div>
@@ -102,5 +100,42 @@
       </header>
       <!-- Home & Menu Section End-->
 
+	  <!-- About Section Start -->
+	  <section id="about" class="about-section">
+	  	<div class="row">
+	  		<div class="col-md-6 col-sm-12 col-xs-12">
+              <img class="img-responsive" src="images/bg/me.jpg" draggable="false" alt="">
+            </div>
+                
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="about-me section-space-padding">
+                  <h2>Skill Set</h2>
+                  <p>Java(jdk1.7)<br>
+                  	Spring(3.2.9.RELEASE)<br>
+                  	JQuery,Ajax<br>
+                  	Bootstrap<br>
+                  	MyBatis<br>
+                  	Oracle 11g<br>
+                  	Eclipse Neon<br>
+                  	Github(url:https://github.com/pch8388/origin.git)
+                  </p>
+                </div>   
+            </div>
+	  	</div>
+	  </section>
+	  <!-- About Section End -->
+	 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("a[name='login']").on("click",function(e){
+			e.preventDefault();
+			fn_login();
+		});
+	});
+	
+	function fn_login(){
+		location.href="/user/login";
+	}
+</script>
 </body>
 </html>
