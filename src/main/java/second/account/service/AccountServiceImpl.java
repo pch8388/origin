@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import second.account.dao.AccountDAO;
 import second.account.dto.AccountDTO;
+import second.account.dto.AccountIncomeVO;
 import second.sample.user.UserVO;
 
 @Service("accountService")
@@ -29,6 +30,16 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public List<AccountDTO> accountListSum(UserVO vo) throws Exception {
 		return dao.accountListSum(vo);
+	}
+
+	@Override
+	public void accountIncomeSave(AccountIncomeVO vo) throws Exception {
+		dao.accountIncomeSave(vo);
+	}
+
+	@Override
+	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo) throws Exception {
+		return dao.accountIncomeList(vo);
 	}
 
 }

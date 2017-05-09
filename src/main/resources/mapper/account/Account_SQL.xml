@@ -57,4 +57,31 @@
 			ORDER BY classification
 		]]>
 	</select>
+	
+	<insert id="accountIncomeSave">
+		<![CDATA[
+			INSERT INTO SC_ACCOUNTINCOME
+			(
+				idx,
+				salary,
+				income,
+				id,
+				income_date
+			)
+			VALUES
+			(
+				seq_sc_accountincom_idx.nextval,
+				#{salary},
+				#{income},
+				#{id},
+				#{income_date}
+			)
+		]]>
+	</insert>
+	
+	<select id="accountIncomeList" resultType="second.account.dto.AccountIncomeVO">
+		<![CDATA[
+			SELECT * FROM SC_ACCOUNTINCOME
+		]]>
+	</select>
 </mapper>

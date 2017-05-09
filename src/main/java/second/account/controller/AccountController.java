@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import second.account.dto.AccountDTO;
+import second.account.dto.AccountIncomeVO;
 import second.account.service.AccountService;
 import second.sample.user.UserVO;
 
@@ -100,5 +101,31 @@ public class AccountController {
 		mv.addObject("cols",ajaxArryCols);
 		log.info(mv.toString());
 		return mv;
+	}
+	
+	@RequestMapping("/account_income")
+	public void accountIncome(@ModelAttribute("vo")AccountIncomeVO vo)throws Exception{
+		
+	}
+	
+	@RequestMapping("/account_income_save")
+	public String accountIncomeSave(AccountIncomeVO vo)throws Exception{
+		if(vo.getSalary()==null || vo.getSalary()==""){
+			vo.setSalary("0");
+		}
+		if(vo.getIncome()==null || vo.getIncome()==""){
+			vo.setIncome("0");
+		}
+		service.accountIncomeSave(vo);
+		return "redirect:/account/account_income";
+	}
+	
+	@RequestMapping("/account_income_list")
+	public String accountIncomeList(AccountIncomeVO vo,Model model) throws Exception{
+		
+		List<AccountIncomeVO> list = service.accountIncomeList(vo);
+		
+		model.addAttribute("list", list);
+		return "/account/account_income_list";
 	}
 }

@@ -42,12 +42,13 @@
 	<form id="frm" name="frm">
 		<table class="table table-bordered">
 			<thead>
+			<tr>
 				<th>날짜</th>
 				<th>사용내역</th>
 				<th>현금</th>
 				<th>카드</th>
 				<th>분류</th>
-				<th>태그</th>
+				<th>태그</th></tr>
 			</thead>
 			<tbody>
 				<tr>
@@ -81,12 +82,13 @@
 		<div class="container">
 		<table class="table table-bordered">
 			<thead>
+			<tr>
 				<th>날짜</th>
 				<th>사용내역</th>
 				<th>현금</th>
 				<th>카드</th>
 				<th>분류</th>
-				<th>태그</th>
+				<th>태그</th></tr>
 			</thead>
 			<tbody>
 				<c:choose>

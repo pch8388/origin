@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import second.account.dto.AccountDTO;
+import second.account.dto.AccountIncomeVO;
 import second.sample.user.UserVO;
 
 @Repository("accountDAO")
@@ -28,5 +29,15 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public List<AccountDTO> accountListSum(UserVO vo) throws Exception {
 		return sqlSession.selectList("account.accountListSum", vo);
+	}
+
+	@Override
+	public void accountIncomeSave(AccountIncomeVO vo) throws Exception {
+		sqlSession.insert("account.accountIncomeSave", vo);
+	}
+
+	@Override
+	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo) throws Exception {
+		return sqlSession.selectList("account.accountIncomeList", vo);
 	}
 }

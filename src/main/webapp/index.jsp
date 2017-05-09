@@ -112,6 +112,8 @@
                   <h2>Skill Set</h2>
                   <p>Java(jdk1.7)<br>
                   	Spring(3.2.9.RELEASE)<br>
+                  	Tomcat8.0<br>
+                  	Maven<br>
                   	JQuery,Ajax<br>
                   	Bootstrap<br>
                   	MyBatis<br>
