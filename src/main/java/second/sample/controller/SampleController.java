@@ -23,6 +23,11 @@ public class SampleController {
 	@Resource(name="sampleService")
 	private SampleService sampleService;
 	
+	@RequestMapping("/sample/index2")
+	public void index2()throws Exception{
+		
+	}
+	
 	@RequestMapping(value="/sample/openBoardList")
 	public ModelAndView openBoardList(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("/sample/boardList");

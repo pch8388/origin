@@ -40,4 +40,9 @@ public class AccountDAOImpl implements AccountDAO {
 	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo) throws Exception {
 		return sqlSession.selectList("account.accountIncomeList", vo);
 	}
+
+	@Override
+	public String monthIncome(AccountIncomeVO vo) throws Exception {
+		return sqlSession.selectOne("account.monthIncome", vo);
+	}
 }

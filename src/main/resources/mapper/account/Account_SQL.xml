@@ -84,4 +84,16 @@
 			SELECT * FROM SC_ACCOUNTINCOME
 		]]>
 	</select>
+	
+	<select id="monthIncome" resultType="string">
+		<![CDATA[
+			SELECT
+				sum(salary+income) monthIncome
+			FROM
+		 		SC_ACCOUNTINCOME
+		 	WHERE
+		 		income_date like #{income_date} and id = #{id}
+		 	GROUP BY id
+		]]>
+	</select>
 </mapper>

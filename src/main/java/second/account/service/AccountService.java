@@ -18,4 +18,8 @@ public interface AccountService {
 
 	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo)throws Exception;
 
+	public String dateCal() throws Exception;
+
+	public String monthIncome(AccountIncomeVO vo) throws Exception;
+
 }

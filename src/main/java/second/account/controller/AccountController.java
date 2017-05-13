@@ -30,11 +30,16 @@ public class AccountController {
 	private AccountService service;
 	
 	@RequestMapping("/account_book")
-	public void accountBook(@ModelAttribute("dto")AccountDTO dto,HttpSession session,Model model)throws Exception{
-		UserVO vo = (UserVO)session.getAttribute("login");
-		List<AccountDTO> list = service.accountList(vo);
-		
+	public void accountBook(@ModelAttribute("dto")AccountDTO dto,HttpSession session,Model model,AccountIncomeVO vo)throws Exception{
+		UserVO uvo = (UserVO)session.getAttribute("login");
+		List<AccountDTO> list = service.accountList(uvo);
 		model.addAttribute("list", list);
+		
+		String date = service.dateCal();
+		vo.setIncome_date(date);
+		vo.setId(uvo.getId());
+		String monthIncome = service.monthIncome(vo);
+		model.addAttribute("monthIncome",monthIncome);
 	}
 	
 	@RequestMapping("/account_save")

@@ -34,6 +34,19 @@
 	</script>
 </head>
 <body>
+<div id="wrapper" class="active">  
+    <!-- Sidebar -->
+            <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+       <ul class="sidebar-nav" id="sidebar">
+          <li><a href="#this" name="account_income">수입입력</a></li>
+          <li><a>이달의 수입  <br>&nbsp;&nbsp;&nbsp; ${monthIncome}원</a><br></li>
+          <li><a>지출</a> <br>
+        &nbsp;&nbsp;&nbsp;현금지출<br>
+       &nbsp;&nbsp;&nbsp;카드지출</li>
+          <li><a>수입-지출</a></li>
+       </ul>
+    </div>
 
 <!--Div that will hold the pie chart-->
 <div class="container">
@@ -114,6 +127,7 @@
 	
 		<br/>
 	</div>
+</div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -121,12 +135,19 @@
 			e.preventDefault();
 			fn_saveAccount();
 		});
+		$("a[name='account_income']").on("click",function(e){
+			e.preventDefault();
+			fn_accountIncome();
+		});
 	});
 	
 	function fn_saveAccount(){
 		var comSubmit = new ComSubmit("frm");
 		comSubmit.setUrl("/account/account_save");
 		comSubmit.submit();
+	}
+	function fn_accountIncome(){
+		window.open("/account/account_income","income","width=800 height=500");
 	}
 </script>
 </body>

@@ -18,4 +18,6 @@ public interface AccountDAO {
 
 	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo)throws Exception;
 
+	public String monthIncome(AccountIncomeVO vo) throws Exception;
+
 }
