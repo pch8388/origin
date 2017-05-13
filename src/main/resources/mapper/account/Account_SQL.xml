@@ -96,4 +96,17 @@
 		 	GROUP BY id
 		]]>
 	</select>
+	
+	<select id="monthSpend" resultType="second.account.dto.AccountDTO">
+		<![CDATA[
+			SELECT
+				sum(cash) cash,
+				sum(card) card,
+				sum(cash+card) money
+			FROM
+				SC_ACCOUNT
+			WHERE
+				account_date like #{account_date} and id = #{id}
+		]]>
+	</select>
 </mapper>

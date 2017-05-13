@@ -39,12 +39,16 @@
             <!-- Sidebar -->
     <div id="sidebar-wrapper">
        <ul class="sidebar-nav" id="sidebar">
-          <li><a href="#this" name="account_income">수입입력</a></li>
+          <li><a href="#this" name="account_income" class="btn btn-primary">수입입력</a></li>
           <li><a>이달의 수입  <br>&nbsp;&nbsp;&nbsp; ${monthIncome}원</a><br></li>
-          <li><a>지출</a> <br>
+          <li><a>지출 <br>
+          &nbsp;&nbsp;&nbsp;${dtoSum.money}원<br>
         &nbsp;&nbsp;&nbsp;현금지출<br>
-       &nbsp;&nbsp;&nbsp;카드지출</li>
-          <li><a>수입-지출</a></li>
+        &nbsp;&nbsp;&nbsp;${dtoSum.cash }원<br>
+       &nbsp;&nbsp;&nbsp;카드지출
+       &nbsp;&nbsp;&nbsp;${dtoSum.card }원</a></li>
+          <li><a>수입-지출<br>
+       &nbsp;&nbsp;&nbsp;${sub }원</a></li>
        </ul>
     </div>
 

@@ -22,4 +22,6 @@ public interface AccountService {
 
 	public String monthIncome(AccountIncomeVO vo) throws Exception;
 
+	public AccountDTO monthSpend(AccountDTO dto) throws Exception;
+
 }

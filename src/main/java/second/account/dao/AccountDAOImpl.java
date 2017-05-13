@@ -45,4 +45,9 @@ public class AccountDAOImpl implements AccountDAO {
 	public String monthIncome(AccountIncomeVO vo) throws Exception {
 		return sqlSession.selectOne("account.monthIncome", vo);
 	}
+
+	@Override
+	public AccountDTO monthSpend(AccountDTO dto) throws Exception {
+		return sqlSession.selectOne("account.monthSpend", dto);
+	}
 }

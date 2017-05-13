@@ -55,4 +55,9 @@ public class AccountServiceImpl implements AccountService {
 		return dao.monthIncome(vo);
 	}
 
+	@Override
+	public AccountDTO monthSpend(AccountDTO dto) throws Exception {
+		return dao.monthSpend(dto);
+	}
+
 }

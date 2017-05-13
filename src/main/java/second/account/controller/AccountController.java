@@ -40,6 +40,12 @@ public class AccountController {
 		vo.setId(uvo.getId());
 		String monthIncome = service.monthIncome(vo);
 		model.addAttribute("monthIncome",monthIncome);
+		dto.setAccount_date(date);
+		dto.setId(uvo.getId());
+		AccountDTO dtoSum = service.monthSpend(dto);
+		model.addAttribute("dtoSum", dtoSum);
+		int sub = Integer.parseInt(monthIncome) - dtoSum.getMoney();
+		model.addAttribute("sub", sub);
 	}
 	
 	@RequestMapping("/account_save")
