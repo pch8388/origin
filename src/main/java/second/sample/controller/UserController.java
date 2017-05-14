@@ -1,7 +1,6 @@
 package second.sample.controller;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +18,7 @@ import second.sample.user.UserVO;
 @RequestMapping("/user")
 public class UserController {
 	
+	
 	@Resource(name="userService")
 	private UserService service;
 	
@@ -27,8 +27,24 @@ public class UserController {
 		
 	}
 	
+	@RequestMapping(value="/loginCheck",method=RequestMethod.POST)
+	public ModelAndView loginCheck(@RequestParam("id")String id,@RequestParam("pw")String pw)throws Exception{
+		ModelAndView mav = new ModelAndView("jsonView");
+		LoginDTO dto = new LoginDTO();
+
+		dto.setId(id);
+		dto.setPw(pw);
+		UserVO vo = service.login(dto);
+		if(vo == null){
+			mav.addObject("pw", false);
+		}else{
+			mav.addObject("pw", true);
+		}
+		return mav;
+	}
+	
 	@RequestMapping(value="/loginPost",method=RequestMethod.POST)
-	public void loginPOST(LoginDTO dto,HttpSession session,Model model) throws Exception{
+	public void loginPOST(LoginDTO dto,Model model) throws Exception{
 		UserVO vo = service.login(dto);
 		
 		if(vo == null){

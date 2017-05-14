@@ -27,4 +27,5 @@ public class UserDAOImpl implements UserDAO {
 	public UserVO idCheck(String id) throws Exception {
 		return sqlSession.selectOne("member.idCheck", id);
 	}
+
 }

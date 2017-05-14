@@ -10,6 +10,5 @@ public interface UserDAO {
 	public void join(UserVO vo) throws Exception;
 
 	public UserVO idCheck(String id) throws Exception;
-
 	
 }

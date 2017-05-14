@@ -9,11 +9,11 @@
 	<form id="frm" name="frm">
 	<div class="container">
 		<div class="form-group has-feedback">
-			<input type="text" name="id" class="form-control" placeholder="USER_ID" />
+			<input type="text" name="id" id="id" class="form-control" placeholder="USER_ID" />
 			<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 		</div>
 		<div class="form-group has-feedback">
-			<input type="password" name="pw" class="form-control" placeholder="PASSWORD" />
+			<input type="password" name="pw" id="pw" class="form-control" placeholder="PASSWORD" />
 			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 		</div>
 		<div class="row">
@@ -46,9 +46,26 @@
 		});
 		
 		function fn_loginForm(){
-			var comSubmit = new ComSubmit("frm");
-			comSubmit.setUrl("<c:url value='/user/loginPost' />");
-			comSubmit.submit();
+			var id = $("#id").val();
+			var pw = $("#pw").val();
+			$.ajax({
+				url: "/user/loginCheck",
+				type: "POST",
+				data: {"id":id , "pw":pw},
+				success: function(data){
+					if(data.pw){
+						console.log(data);
+						var comSubmit = new ComSubmit("frm");
+						comSubmit.setUrl("<c:url value='/user/loginPost' />");
+						comSubmit.submit();			
+					}else{
+						console.log(data);
+						alert("아이디, 비밀번호를 확인해주세요");
+						document.frm.reset();
+					}
+				}
+			});
+				
 		}
 		
 		function fn_joinForm(){

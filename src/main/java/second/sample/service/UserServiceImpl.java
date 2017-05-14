@@ -28,5 +28,4 @@ public class UserServiceImpl implements UserService {
 	public UserVO idCheck(String id) throws Exception {
 		return dao.idCheck(id);
 	}
-
 }
