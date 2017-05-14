@@ -134,6 +134,7 @@
 </div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <script type="text/javascript">
+	var win1 = null;
 	$(document).ready(function(){
 		$("#save").on("click",function(e){
 			e.preventDefault();
@@ -151,7 +152,16 @@
 		comSubmit.submit();
 	}
 	function fn_accountIncome(){
-		window.open("/account/account_income","income","width=800 height=500");
+		win1 = window.open("/account/account_income","income","width=800 height=500");
+		checkChild();
+	}
+	
+	function checkChild(){
+		if(win1.closed){
+			window.location.reload(true);
+		}else{
+			setTimeout("checkChild()",1);
+		}
 	}
 </script>
 </body>

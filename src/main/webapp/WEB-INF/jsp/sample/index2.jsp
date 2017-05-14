@@ -83,10 +83,10 @@
                               <div class="col-md-12 text-center">
                                   <div class="header-text">
                                       <p>Hi! It's Portfolio</p>
-                                      <h2><span class="typing"></span></h2>
+                                      
 
                                       <div class="margin-top-60">
-                            <a class="button button-style button-style-icon fa fa-long-arrow-right smoth-scroll" href="#portfolio">View Portfolio</a>
+                            <a class="button button-style button-style-icon fa fa-long-arrow-right smoth-scroll" href="#portfolio" name="accountbook">View Portfolio</a>
                                     </div>
 
                                   </div>
