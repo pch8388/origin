@@ -3,6 +3,7 @@ package second.account.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -25,8 +26,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<AccountDTO> accountList(UserVO vo) throws Exception{
-		return dao.accountList(vo);
+	public List<AccountDTO> accountList(Map<String,Object> map) throws Exception{
+		return dao.accountList(map);
 	}
 
 	@Override

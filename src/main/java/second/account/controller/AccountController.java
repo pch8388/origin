@@ -1,10 +1,14 @@
 package second.account.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,8 +36,6 @@ public class AccountController {
 	@RequestMapping("/account_book")
 	public void accountBook(@ModelAttribute("dto")AccountDTO dto,HttpSession session,Model model,AccountIncomeVO vo)throws Exception{
 		UserVO uvo = (UserVO)session.getAttribute("login");
-		List<AccountDTO> list = service.accountList(uvo);
-		model.addAttribute("list", list);
 		
 		String date = service.dateCal();
 		vo.setIncome_date(date);
@@ -63,12 +65,43 @@ public class AccountController {
 		return "redirect:/account/account_book";
 	}
 	
-	@RequestMapping("/account_list")
-	public void accountList(HttpSession session,Model model) throws Exception{
-		UserVO vo = (UserVO)session.getAttribute("login");
-		List<AccountDTO> list = service.accountList(vo);
+	@RequestMapping("/account_list1")
+	public void accountList1() throws Exception{
 		
-		model.addAttribute("list", list);
+	}
+	@RequestMapping("/account_list")
+	public ModelAndView accountList(HttpSession session,HttpServletRequest req) throws Exception{
+		ModelAndView mav = new ModelAndView("jsonView");
+		
+		String strPageIndex = (String)req.getAttribute("PAGE_INDEX");
+		String strPageRow = (String)req.getAttribute("PAGE_ROW");
+		int nPageIndex = 0;
+		int nPageRow = 20;
+		
+		if(StringUtils.isEmpty(strPageIndex) == false){
+			nPageIndex = Integer.parseInt(strPageIndex) - 1;
+		}
+		if(StringUtils.isEmpty(strPageRow) == false){
+			nPageRow = Integer.parseInt(strPageRow);
+		} 
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("pageStart", (nPageIndex * nPageRow) + 1);
+		map.put("perPageNum",(nPageIndex * nPageRow) + nPageRow);
+		
+		UserVO vo = (UserVO)session.getAttribute("login");
+		map.put("id", vo.getId());
+		
+		List<AccountDTO> list = service.accountList(map);
+		
+		log.info(list.toString());
+		mav.addObject("list", list);
+		if(list.size() > 0){
+			mav.addObject("TOTAL", list.get(0).getTOTAL_COUNT());
+		}else{
+			mav.addObject("TOTAL", 0);
+		}
+		
+		return mav;
 	}
 	@RequestMapping("/account_chart")
 	public void accountChart(@ModelAttribute("vo")UserVO vo) throws Exception{

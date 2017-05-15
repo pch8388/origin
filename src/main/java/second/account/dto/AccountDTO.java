@@ -10,7 +10,15 @@ public class AccountDTO {
 	private String memo;           //메모
 	private String id;
 	private int money;
+	private int TOTAL_COUNT;
 	
+	
+	public int getTOTAL_COUNT() {
+		return TOTAL_COUNT;
+	}
+	public void setTOTAL_COUNT(int tOTAL_COUNT) {
+		TOTAL_COUNT = tOTAL_COUNT;
+	}
 	public int getMoney() {
 		return money;
 	}

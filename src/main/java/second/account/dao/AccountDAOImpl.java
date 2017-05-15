@@ -1,6 +1,7 @@
 package second.account.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public List<AccountDTO> accountList(UserVO vo) throws Exception {
-		return sqlSession.selectList("account.accountList", vo);
+	public List<AccountDTO> accountList(Map<String,Object> map) throws Exception {
+		return sqlSession.selectList("account.accountList", map);
 	}
 
 	@Override

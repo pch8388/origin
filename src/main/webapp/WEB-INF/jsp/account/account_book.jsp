@@ -18,7 +18,7 @@
     function drawChart() {
       var id = "${login.id}";
       var jsonData = $.ajax({
-          url: "<c:url value='/account/account_chart_draw' />",
+          url: "/account/account_chart_draw",
           data: {"id":id},
           dataType: "json",
           async: false
@@ -58,7 +58,6 @@
 	<div class="container">
 	<form id="frm" name="frm">
 		<table class="table table-bordered">
-			<thead>
 			<tr>
 				<th>날짜</th>
 				<th>사용내역</th>
@@ -66,8 +65,6 @@
 				<th>카드</th>
 				<th>분류</th>
 				<th>태그</th></tr>
-			</thead>
-			<tbody>
 				<tr>
 					<td><input type="date" name="account_date" /></td>
 					<td><input type="text" name="use_detail" /></td>
@@ -90,7 +87,6 @@
 					<td><input type="text" name="memo" />
 					<input type="hidden" name="id" value="${login.id }" /></td> 
 				</tr>
-			</tbody>
 		</table>
 		<a href="#this" id="save" class="btn btn-default">저장하기</a>
 	</form>
@@ -107,27 +103,13 @@
 				<th>분류</th>
 				<th>태그</th></tr>
 			</thead>
-			<tbody>
-				<c:choose>
-					<c:when test="${fn:length(list)>0 }">
-						<c:forEach items="${list }" var="row">
-							<tr>
-								<td>${row.account_date }</td>
-								<td>${row.use_detail }</td>
-								<td>${row.cash }</td>
-								<td>${row.card }</td>
-								<td>${row.classification }</td>
-								<td>${row.memo }</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr><td colspan="6">조회된 결과가 없습니다.</td></tr>
-					</c:otherwise>
-				</c:choose>
+			<tbody id="spend">
+			
 			</tbody>
 		</table>
-	
+		
+		<div id="PAGE_NAVI" class="text-center"></div>
+		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
 	
 		<br/>
 	</div>
@@ -136,6 +118,7 @@
 <script type="text/javascript">
 	var win1 = null;
 	$(document).ready(function(){
+		fn_accountList(1);
 		$("#save").on("click",function(e){
 			e.preventDefault();
 			fn_saveAccount();
@@ -161,6 +144,47 @@
 			window.location.reload(true);
 		}else{
 			setTimeout("checkChild()",1);
+		}
+	}
+	
+	function fn_accountList(pageNo){
+		var comAjax = new ComAjax();
+		comAjax.setUrl("/account/account_list");
+		comAjax.setCallback("fn_accountListCallback");
+		comAjax.addParam("PAGE_INDEX",pageNo);
+		comAjax.addParam("PAGE_ROW",20);
+		comAjax.ajax();
+	}
+	
+	function fn_accountListCallback(data){
+		var total = data.TOTAL;
+		var body = $("#spend");
+		body.empty();
+		if(total == 0){
+			var str = "<tr>"+
+							"<td colspan='5'>조회된 결과가 없습니다.</td>" +
+						"</tr>";
+			body.append(str);
+		}else{
+			var params = {
+					divId : "PAGE_NAVI",
+					pageIndex : "PAGE_INDEX",
+					totalCount : total,
+					eventName : "fn_accountList"
+			};
+			gfn_renderPaging(params);
+			
+			var str = "";
+			$.each(data.list,function(key,value){
+				str += "<tr>" +
+							"<td>" + value.account_date + "</td>" +
+							"<td>" + value.use_detail + "</td>" +
+							"<td>" + value.cash + "</td>" +
+							"<td>" + value.card + "</td>" +
+							"<td>" + value.classification + "</td>" +
+						"</tr>";
+			});
+			body.append(str);
 		}
 	}
 </script>

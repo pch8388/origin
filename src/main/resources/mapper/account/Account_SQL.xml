@@ -28,8 +28,10 @@
 	</insert>
 	
 	<select id="accountList" resultType="second.account.dto.AccountDTO">
+		<include refid="common.pagingPre" />
 		<![CDATA[
 			SELECT
+				ROW_NUMBER() OVER (ORDER BY id DESC) RNUM,
 				account_date,
 				use_detail,
 				cash,
@@ -43,6 +45,7 @@
 				id = #{id}
 			ORDER BY account_date desc
 		]]>
+		<include refid="common.pagingPost" />
 	</select>
 	
 	<select id="accountListSum" resultType="second.account.dto.AccountDTO">
