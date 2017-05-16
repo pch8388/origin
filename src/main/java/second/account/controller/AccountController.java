@@ -73,8 +73,8 @@ public class AccountController {
 	public ModelAndView accountList(HttpSession session,HttpServletRequest req) throws Exception{
 		ModelAndView mav = new ModelAndView("jsonView");
 		
-		String strPageIndex = (String)req.getAttribute("PAGE_INDEX");
-		String strPageRow = (String)req.getAttribute("PAGE_ROW");
+		String strPageIndex = (String)req.getParameter("PAGE_INDEX");
+		String strPageRow = (String)req.getParameter("PAGE_ROW");
 		int nPageIndex = 0;
 		int nPageRow = 20;
 		
@@ -93,7 +93,6 @@ public class AccountController {
 		
 		List<AccountDTO> list = service.accountList(map);
 		
-		log.info(list.toString());
 		mav.addObject("list", list);
 		if(list.size() > 0){
 			mav.addObject("TOTAL", list.get(0).getTOTAL_COUNT());

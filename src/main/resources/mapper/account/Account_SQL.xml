@@ -43,7 +43,6 @@
 				sc_account
 			WHERE
 				id = #{id}
-			ORDER BY account_date desc
 		]]>
 		<include refid="common.pagingPost" />
 	</select>
