@@ -23,4 +23,6 @@ public interface AccountDAO {
 
 	public AccountDTO monthSpend(AccountDTO dto) throws Exception;
 
+	public void accountDelete(String checkBoxValues) throws Exception;
+
 }

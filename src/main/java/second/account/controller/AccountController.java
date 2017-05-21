@@ -45,9 +45,19 @@ public class AccountController {
 		dto.setAccount_date(date);
 		dto.setId(uvo.getId());
 		AccountDTO dtoSum = service.monthSpend(dto);
-		model.addAttribute("dtoSum", dtoSum);
-		int sub = Integer.parseInt(monthIncome) - dtoSum.getMoney();
-		model.addAttribute("sub", sub);
+		if(dtoSum!=null){
+			model.addAttribute("dtoSum", dtoSum);
+			int sub = Integer.parseInt(monthIncome) - dtoSum.getMoney();
+			model.addAttribute("sub", sub);	
+		}else{
+			dtoSum = new AccountDTO();
+			dtoSum.setCard("0");
+			dtoSum.setCash("0");
+			dtoSum.setMoney(0);
+			model.addAttribute("dtoSum", dtoSum);
+			int sub = Integer.parseInt(monthIncome);
+			model.addAttribute("sub", sub);
+		}
 	}
 	
 	@RequestMapping("/account_save")
@@ -65,10 +75,6 @@ public class AccountController {
 		return "redirect:/account/account_book";
 	}
 	
-	@RequestMapping("/account_list1")
-	public void accountList1() throws Exception{
-		
-	}
 	@RequestMapping("/account_list")
 	public ModelAndView accountList(HttpSession session,HttpServletRequest req) throws Exception{
 		ModelAndView mav = new ModelAndView("jsonView");
@@ -170,5 +176,14 @@ public class AccountController {
 		
 		model.addAttribute("list", list);
 		return "/account/account_income_list";
+	}
+	
+	@RequestMapping("/account_delete")
+	public ModelAndView accountDelete(@RequestParam("value=checkBoxValues[]")List<String> arrayParams)throws Exception{
+		ModelAndView mav = new ModelAndView("jsonView");
+		log.info("arrayparams : "+arrayParams);
+		service.accountDelete(arrayParams);
+		mav.addObject(true);
+		return mav;
 	}
 }

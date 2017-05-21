@@ -51,4 +51,9 @@ public class AccountDAOImpl implements AccountDAO {
 	public AccountDTO monthSpend(AccountDTO dto) throws Exception {
 		return sqlSession.selectOne("account.monthSpend", dto);
 	}
+
+	@Override
+	public void accountDelete(String checkBoxValues) throws Exception {
+		sqlSession.delete("account.accountDelete", checkBoxValues);
+	}
 }

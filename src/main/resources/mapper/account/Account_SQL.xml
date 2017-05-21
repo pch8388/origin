@@ -6,6 +6,7 @@
 		<![CDATA[
 			INSERT INTO SC_ACCOUNT
 			(
+				idx,
 				account_date,
 				use_detail,
 				cash,
@@ -16,6 +17,7 @@
 			)	
 			VALUES
 			(
+				seq_sc_account_idx.nextval,
 				#{account_date},
 				#{use_detail},
 				#{cash},
@@ -32,6 +34,7 @@
 		<![CDATA[
 			SELECT
 				ROW_NUMBER() OVER (ORDER BY id DESC) RNUM,
+				idx,
 				account_date,
 				use_detail,
 				cash,
@@ -111,4 +114,14 @@
 				account_date like #{account_date} and id = #{id}
 		]]>
 	</select>
+	
+	<delete id="accountDelete">
+		<![CDATA[
+			DELETE
+			FROM
+				SC_ACCOUNT
+			WHERE
+				idx = #{checkBoxValues}
+		]]>
+	</delete>
 </mapper>

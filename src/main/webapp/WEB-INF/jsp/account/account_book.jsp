@@ -45,7 +45,7 @@
           &nbsp;&nbsp;&nbsp;${dtoSum.money}원<br>
         &nbsp;&nbsp;&nbsp;현금지출<br>
         &nbsp;&nbsp;&nbsp;${dtoSum.cash }원<br>
-       &nbsp;&nbsp;&nbsp;카드지출
+       &nbsp;&nbsp;&nbsp;카드지출<br>
        &nbsp;&nbsp;&nbsp;${dtoSum.card }원</a></li>
           <li><a>수입-지출<br>
        &nbsp;&nbsp;&nbsp;${sub }원</a></li>
@@ -135,12 +135,37 @@
 				$("input[name='chk']").prop("checked",false);
 			}
 		});
+		$("#chkDel").on("click",function(e){
+			e.preventDefault();
+			fn_chkDelete();
+		});
 	});
 	
+	function fn_chkDelete(){
+		var checkBoxValues = [];
+		$("input[name='chk']:checked").each(function(){
+			checkBoxValues.push($(this).val());
+		});
+		console.log(checkBoxValues);
+		
+		$.ajax({
+			url:"/account/account_delete",
+			data: {"checkBoxValues":checkBoxValues},
+			type: "POST",
+			async: false
+		});
+	}
+	
 	function fn_saveAccount(){
-		var comSubmit = new ComSubmit("frm");
-		comSubmit.setUrl("/account/account_save");
-		comSubmit.submit();
+		var formData = $("#frm").serialize();
+		$.ajax({
+			url: "/account/account_save",
+			type: "POST",
+			data: formData,
+			success: function(data){
+				fn_accountList(1);
+			}
+		});
 	}
 	function fn_accountIncome(){
 		win1 = window.open("/account/account_income","income","width=800 height=500");
@@ -170,7 +195,7 @@
 		body.empty();
 		if(total == 0){
 			var str = "<tr>"+
-							"<td colspan='5'>조회된 결과가 없습니다.</td>" +
+							"<td colspan='7'>조회된 결과가 없습니다.</td>" +
 						"</tr>";
 			body.append(str);
 		}else{
@@ -185,7 +210,7 @@
 			var str = "";
 			$.each(data.list,function(key,value){
 				str += "<tr>" +
-							"<td><input type='checkbox' name='chk' value='chk_"+key+"' />" + "</td>" +
+							"<td><input type='checkbox' name='chk' value='"+value.idx+"' />" + "</td>" +
 							"<td>" + value.account_date + "</td>" +
 							"<td>" + value.use_detail + "</td>" +
 							"<td>" + value.cash + "</td>" +

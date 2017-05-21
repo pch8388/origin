@@ -2,6 +2,7 @@ package second.account.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,16 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public AccountDTO monthSpend(AccountDTO dto) throws Exception {
 		return dao.monthSpend(dto);
+	}
+
+	@Override
+	public void accountDelete(List<String> arrayParams) throws Exception {
+		Iterator<String> it = arrayParams.iterator();
+		
+		while(it.hasNext()){
+			String checkBoxValues = (String)it.next();
+			dao.accountDelete(checkBoxValues);
+		}
 	}
 
 }

@@ -11,8 +11,17 @@ public class AccountDTO {
 	private String id;
 	private int money;
 	private int TOTAL_COUNT;
+	private int idx;
 	
 	
+	
+	
+	public int getIdx() {
+		return idx;
+	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
 	public int getTOTAL_COUNT() {
 		return TOTAL_COUNT;
 	}

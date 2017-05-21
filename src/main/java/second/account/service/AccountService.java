@@ -25,4 +25,6 @@ public interface AccountService {
 
 	public AccountDTO monthSpend(AccountDTO dto) throws Exception;
 
+	public void accountDelete(List<String> arrayParams) throws Exception;
+
 }
