@@ -61,7 +61,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping("/account_save")
-	public String accountSave(AccountDTO dto,Model model) throws Exception{
+	public ModelAndView accountSave(AccountDTO dto,Model model) throws Exception{
 		if(dto.getCash()==null || dto.getCash()==""){
 			dto.setCash("0");
 		}
@@ -72,7 +72,7 @@ public class AccountController {
 			dto.setMemo(" ");
 		}
 		service.accountSave(dto);
-		return "redirect:/account/account_book";
+		return new ModelAndView("jsonView");
 	}
 	
 	@RequestMapping("/account_list")
@@ -179,7 +179,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping("/account_delete")
-	public ModelAndView accountDelete(@RequestParam("value=checkBoxValues[]")List<String> arrayParams)throws Exception{
+	public ModelAndView accountDelete(@RequestParam("checkBoxValues[]")List<String> arrayParams)throws Exception{
 		ModelAndView mav = new ModelAndView("jsonView");
 		log.info("arrayparams : "+arrayParams);
 		service.accountDelete(arrayParams);

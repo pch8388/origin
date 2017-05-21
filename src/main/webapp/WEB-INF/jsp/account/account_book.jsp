@@ -152,7 +152,9 @@
 			url:"/account/account_delete",
 			data: {"checkBoxValues":checkBoxValues},
 			type: "POST",
-			async: false
+			success: function(data){
+				fn_accountList(1);
+			}
 		});
 	}
 	
