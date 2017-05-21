@@ -96,6 +96,7 @@
 		<table class="table table-bordered">
 			<thead>
 			<tr>
+				<th><input type=checkbox id="chkAll"></th>
 				<th>날짜</th>
 				<th>사용내역</th>
 				<th>현금</th>
@@ -107,10 +108,10 @@
 			
 			</tbody>
 		</table>
-		
+		<a href="#this" id="chkDel" class="btn btn-default pull-right">선택삭제</a>
 		<div id="PAGE_NAVI" class="text-center"></div>
 		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
-	
+			
 		<br/>
 	</div>
 </div>
@@ -126,6 +127,13 @@
 		$("a[name='account_income']").on("click",function(e){
 			e.preventDefault();
 			fn_accountIncome();
+		});
+		$("#chkAll").on("click",function(){
+			if($("#chkAll").prop("checked")){
+				$("input[name='chk']").prop("checked",true);
+			}else{
+				$("input[name='chk']").prop("checked",false);
+			}
 		});
 	});
 	
@@ -177,6 +185,7 @@
 			var str = "";
 			$.each(data.list,function(key,value){
 				str += "<tr>" +
+							"<td><input type='checkbox' name='chk' value='chk_"+key+"' />" + "</td>" +
 							"<td>" + value.account_date + "</td>" +
 							"<td>" + value.use_detail + "</td>" +
 							"<td>" + value.cash + "</td>" +
