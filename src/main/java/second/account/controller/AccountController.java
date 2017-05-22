@@ -41,6 +41,9 @@ public class AccountController {
 		vo.setIncome_date(date);
 		vo.setId(uvo.getId());
 		String monthIncome = service.monthIncome(vo);
+		if(monthIncome==null){
+			monthIncome = "0";
+		}
 		model.addAttribute("monthIncome",monthIncome);
 		dto.setAccount_date(date);
 		dto.setId(uvo.getId());
