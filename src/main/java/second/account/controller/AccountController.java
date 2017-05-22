@@ -40,14 +40,14 @@ public class AccountController {
 		String date = service.dateCal();
 		vo.setIncome_date(date);
 		vo.setId(uvo.getId());
-		String monthIncome = service.monthIncome(vo);
+		String monthIncome = service.monthIncome(vo);       //수입합산
 		if(monthIncome==null){
 			monthIncome = "0";
 		}
 		model.addAttribute("monthIncome",monthIncome);
 		dto.setAccount_date(date);
 		dto.setId(uvo.getId());
-		AccountDTO dtoSum = service.monthSpend(dto);
+		AccountDTO dtoSum = service.monthSpend(dto);       //지출합산
 		if(dtoSum!=null){
 			model.addAttribute("dtoSum", dtoSum);
 			int sub = Integer.parseInt(monthIncome) - dtoSum.getMoney();

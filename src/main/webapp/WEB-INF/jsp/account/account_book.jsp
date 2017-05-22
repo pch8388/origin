@@ -88,11 +88,15 @@
 					<input type="hidden" name="id" value="${login.id }" /></td> 
 				</tr>
 		</table>
-		<a href="#this" id="save" class="btn btn-default">저장하기</a>
+		<a href="#this" id="save" class="btn btn-default pull-right">저장하기</a>
 	</form>
 	</div>
 	
 		<div class="container">
+			<select id="year" name="year"></select>
+			<select id="month" name="month"></select>
+			<br>
+			
 		<table class="table table-bordered">
 			<thead>
 			<tr>
@@ -119,6 +123,8 @@
 <script type="text/javascript">
 	var win1 = null;
 	$(document).ready(function(){
+		fn_year();
+		fn_month();
 		fn_accountList(1);
 		$("#save").on("click",function(e){
 			e.preventDefault();
@@ -140,6 +146,22 @@
 			fn_chkDelete();
 		});
 	});
+	
+	function fn_month(){
+		var d = new Date();
+	    var mon = d.getMonth()+1;
+		for(i=1; i<13; i++){
+			$("#month").append($('<option />').val(i).html(i+"월"));
+		}
+		
+		console.log(mon);
+		$("[value='"+mon+"']").attr("selected","true");
+	}
+	function fn_year(){
+		for (i = new Date().getFullYear(); i > 2015; i--){
+		    $("#year").append($('<option />').val(i).html(i+"년"));
+		}
+	}
 	
 	function fn_chkDelete(){
 		var checkBoxValues = [];
