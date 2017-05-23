@@ -37,15 +37,19 @@ public class AccountController {
 	public void accountBook(@ModelAttribute("dto")AccountDTO dto,HttpSession session,Model model,AccountIncomeVO vo)throws Exception{
 		UserVO uvo = (UserVO)session.getAttribute("login");
 		
-		String date = service.dateCal();
-		vo.setIncome_date(date);
+		if(session.getAttribute("lookUp")==null){
+			String date = service.dateCal();
+			vo.setIncome_date(date);
+		}else{
+			vo.setIncome_date((String)session.getAttribute("lookUp"));
+		}
 		vo.setId(uvo.getId());
 		String monthIncome = service.monthIncome(vo);       //수입합산
 		if(monthIncome==null){
 			monthIncome = "0";
 		}
 		model.addAttribute("monthIncome",monthIncome);
-		dto.setAccount_date(date);
+		dto.setAccount_date(vo.getIncome_date());
 		dto.setId(uvo.getId());
 		AccountDTO dtoSum = service.monthSpend(dto);       //지출합산
 		if(dtoSum!=null){
@@ -61,6 +65,14 @@ public class AccountController {
 			int sub = Integer.parseInt(monthIncome);
 			model.addAttribute("sub", sub);
 		}
+	}
+	
+	@RequestMapping("/account_lookup")
+	public String accountLookup(@RequestParam("yearDate")String year,@RequestParam("monthDate")String month,HttpSession session)throws Exception{
+		String lookUp = year+"-"+month+"%";
+		
+		session.setAttribute("lookUp", lookUp);
+		return "redirect:/account/account_book";
 	}
 	
 	@RequestMapping("/account_save")

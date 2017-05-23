@@ -93,9 +93,13 @@
 	</div>
 	
 		<div class="container">
-			<select id="year" name="year"></select>
-			<select id="month" name="month"></select>
-			<br>
+		<form id="form2" name="form2">
+			<select id="year" name="year"></select>           <!-- 연도별조회 -->
+			<select id="month" name="month"></select>         <!-- 월별조회 -->
+			<a href="#this" id="lookup" class="btn btn-default">조회</a>
+		</form>
+			
+		<br>
 			
 		<table class="table table-bordered">
 			<thead>
@@ -145,6 +149,10 @@
 			e.preventDefault();
 			fn_chkDelete();
 		});
+		$("#lookup").on("click",function(e){
+			e.preventDefault();
+			fn_lookup();
+		});
 	});
 	
 	function fn_month(){
@@ -161,6 +169,16 @@
 		for (i = new Date().getFullYear(); i > 2015; i--){
 		    $("#year").append($('<option />').val(i).html(i+"년"));
 		}
+	}
+	
+	function fn_lookup(){
+		var yearDate = $("#year").val();
+		var monthDate = $("#month").val() < 10 ? "0"+$("#month").val() : $("#month").val();
+		var comSubmit = new ComSubmit("form2");
+		comSubmit.setUrl("/account/account_lookup");
+		comSubmit.addParam("yearDate",yearDate);
+		comSubmit.addParam("monthDate",monthDate);
+		comSubmit.submit();
 	}
 	
 	function fn_chkDelete(){
