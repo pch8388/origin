@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import second.account.dto.AccountDTO;
 import second.account.dto.AccountIncomeVO;
-import second.sample.user.UserVO;
 
 @Repository("accountDAO")
 public class AccountDAOImpl implements AccountDAO {
@@ -28,8 +27,8 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public List<AccountDTO> accountListSum(UserVO vo) throws Exception {
-		return sqlSession.selectList("account.accountListSum", vo);
+	public List<AccountDTO> accountListSum(AccountDTO dto) throws Exception {
+		return sqlSession.selectList("account.accountListSum", dto);
 	}
 
 	@Override

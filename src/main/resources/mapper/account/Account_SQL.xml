@@ -45,7 +45,7 @@
 			FROM
 				sc_account
 			WHERE
-				id = #{id}
+				id = #{id} and account_date like #{account_date}
 		]]>
 		<include refid="common.pagingPost" />
 	</select>
@@ -57,7 +57,7 @@
 			FROM 
 				sc_account
 			WHERE
-				id=#{id}
+				id=#{id} and account_date like #{account_date}
 			GROUP BY classification
 			ORDER BY classification
 		]]>

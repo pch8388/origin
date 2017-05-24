@@ -7,31 +7,6 @@
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript">
-    
-    // Load the Visualization API and the piechart package.
-    google.charts.load('current', {'packages':['corechart']});
-      
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(drawChart);
-      
-    function drawChart() {
-      var id = "${login.id}";
-      var jsonData = $.ajax({
-          url: "/account/account_chart_draw",
-          data: {"id":id},
-          dataType: "json",
-          async: false
-          }).responseText;
-          console.log(jsonData);
-      // Create our data table out of JSON data loaded from server.
-      var data = new google.visualization.DataTable(jsonData);
-
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, {width: 1000, height: 400});
-    }
-	</script>
 </head>
 <body>
 <div id="wrapper" class="active">  
@@ -39,16 +14,7 @@
             <!-- Sidebar -->
     <div id="sidebar-wrapper">
        <ul class="sidebar-nav" id="sidebar">
-          <li><a href="#this" name="account_income" class="btn btn-primary">수입입력</a></li>
-          <li><a>이달의 수입  <br>&nbsp;&nbsp;&nbsp; ${monthIncome}원</a><br></li>
-          <li><a>지출 <br>
-          &nbsp;&nbsp;&nbsp;${dtoSum.money}원<br>
-        &nbsp;&nbsp;&nbsp;현금지출<br>
-        &nbsp;&nbsp;&nbsp;${dtoSum.cash }원<br>
-       &nbsp;&nbsp;&nbsp;카드지출<br>
-       &nbsp;&nbsp;&nbsp;${dtoSum.card }원</a></li>
-          <li><a>수입-지출<br>
-       &nbsp;&nbsp;&nbsp;${sub }원</a></li>
+
        </ul>
     </div>
 
@@ -93,12 +59,9 @@
 	</div>
 	
 		<div class="container">
-		<form id="form2" name="form2">
 			<select id="year" name="year"></select>           <!-- 연도별조회 -->
 			<select id="month" name="month"></select>         <!-- 월별조회 -->
 			<a href="#this" id="lookup" class="btn btn-default">조회</a>
-		</form>
-			
 		<br>
 			
 		<table class="table table-bordered">
@@ -125,11 +88,41 @@
 </div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <script type="text/javascript">
+    
+    // Load the Visualization API and the piechart package.
+    google.charts.load('current', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+    
+    function drawChart() {             //차트 그리는 function
+      var id = "${login.id}";
+      var jsonData = $.ajax({
+          url: "/account/account_chart_draw",
+          data: {"id":id,"date":todayYearMonth},
+          dataType: "json",
+          async: false
+          }).responseText;
+          console.log(jsonData);
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 1000, height: 400});
+    }
+    
 	var win1 = null;
+	var today = new Date();
+	var todayYear = today.getFullYear();
+	var todayMonth = today.getMonth()+1 < 10 ? "0"+(today.getMonth()+1) : today.getMonth()+1;
+	var todayYearMonth = todayYear+"-"+todayMonth+"%";                 //조회하고 싶은 년,월을 저장하는 변수  . default로 현재날짜의 년,월이 저장되어있음. 쿼리 조회를 위해 string format을 화면에서 처리후 controller로 전송
+	console.log(todayYearMonth);
 	$(document).ready(function(){
 		fn_year();
 		fn_month();
-		fn_accountList(1);
+		fn_accountList(1,todayYearMonth);
+		fn_monthIncome(todayYearMonth);
 		$("#save").on("click",function(e){
 			e.preventDefault();
 			fn_saveAccount();
@@ -155,33 +148,31 @@
 		});
 	});
 	
-	function fn_month(){
+	function fn_month(){              //select box 월 부분 처리
 		var d = new Date();
 	    var mon = d.getMonth()+1;
 		for(i=1; i<13; i++){
 			$("#month").append($('<option />').val(i).html(i+"월"));
 		}
-		
-		console.log(mon);
 		$("[value='"+mon+"']").attr("selected","true");
 	}
-	function fn_year(){
+	function fn_year(){              //select box 연도 부분 처리
 		for (i = new Date().getFullYear(); i > 2015; i--){
 		    $("#year").append($('<option />').val(i).html(i+"년"));
 		}
 	}
 	
-	function fn_lookup(){
+	function fn_lookup(){            //조회버튼 기능
 		var yearDate = $("#year").val();
 		var monthDate = $("#month").val() < 10 ? "0"+$("#month").val() : $("#month").val();
-		var comSubmit = new ComSubmit("form2");
-		comSubmit.setUrl("/account/account_lookup");
-		comSubmit.addParam("yearDate",yearDate);
-		comSubmit.addParam("monthDate",monthDate);
-		comSubmit.submit();
+		todayYearMonth = yearDate+"-"+monthDate+"%";
+		console.log(todayYearMonth);
+		fn_accountList(1,todayYearMonth);
+		google.charts.setOnLoadCallback(drawChart);
+		fn_monthIncome(todayYearMonth);
 	}
 	
-	function fn_chkDelete(){
+	function fn_chkDelete(){             //선택삭제 버튼 기능
 		var checkBoxValues = [];
 		$("input[name='chk']:checked").each(function(){
 			checkBoxValues.push($(this).val());
@@ -193,28 +184,29 @@
 			data: {"checkBoxValues":checkBoxValues},
 			type: "POST",
 			success: function(data){
-				fn_accountList(1);
+				fn_accountList(1,todayYearMonth);
 			}
 		});
 	}
 	
-	function fn_saveAccount(){
+	function fn_saveAccount(){             //저장버튼 기능
 		var formData = $("#frm").serialize();
 		$.ajax({
 			url: "/account/account_save",
 			type: "POST",
 			data: formData,
 			success: function(data){
-				fn_accountList(1);
+				fn_accountList(1,todayYearMonth);
+				$("#frm")[0].reset();
 			}
 		});
 	}
-	function fn_accountIncome(){
+	function fn_accountIncome(){           //수입입력 버튼
 		win1 = window.open("/account/account_income","income","width=800 height=500");
 		checkChild();
 	}
 	
-	function checkChild(){
+	function checkChild(){            //수입입력창 종료되면 account_book 리로드
 		if(win1.closed){
 			window.location.reload(true);
 		}else{
@@ -222,13 +214,46 @@
 		}
 	}
 	
-	function fn_accountList(pageNo){
-		var comAjax = new ComAjax();
-		comAjax.setUrl("/account/account_list");
-		comAjax.setCallback("fn_accountListCallback");
-		comAjax.addParam("PAGE_INDEX",pageNo);
-		comAjax.addParam("PAGE_ROW",20);
-		comAjax.ajax();
+	function fn_monthIncome(date){            //이달의 수입 nav-bar ajax처리
+		$.ajax({
+			url: "/account/monthIncome",
+			type: "POST",
+			data: {"date":date},
+			success: function(data){
+				fn_monthIncomeCallback(data);
+			}
+		});	
+	}
+	
+	function fn_monthIncomeCallback(data){
+		var dtoSum = data.dtoSum;
+		var body =$("#sidebar");
+		body.empty();
+		var str = "<li><a href='#this' name='account_income' class='btn btn-primary'>수입입력</a></li>" +
+					"<li><a>이달의 수입 <br>&nbsp;&nbsp;&nbsp;" + data.monthIncome + "원</a><br></li>" +
+					"<li><a>지출<br>" +
+					"&nbsp;&nbsp;&nbsp;" + dtoSum.money + "원<br>" +
+					"&nbsp;&nbsp;&nbsp;현금지출<br>" +
+					"&nbsp;&nbsp;&nbsp;" + dtoSum.cash + "원<br>" +
+					"&nbsp;&nbsp;&nbsp;카드지출<br>" +
+					"&nbsp;&nbsp;&nbsp;" + dtoSum.card + "원</a></li>" +
+					"<li><a>수입-지출<br>" +
+					"&nbsp;&nbsp;&nbsp;" + data.sub + "원</a></li>";
+					
+       body.append(str);
+	}
+	
+	function fn_accountList(pageNo,date){        //지출 목록 
+		$.ajax({
+			url: "/account/account_list",
+			type: "POST",
+			data: {"PAGE_INDEX":pageNo,
+				"PAGE_ROW":20,
+				"date":date},
+			success: function(data){
+				fn_accountListCallback(data);	
+			}
+		});
 	}
 	
 	function fn_accountListCallback(data){

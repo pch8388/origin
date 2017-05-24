@@ -1,7 +1,5 @@
 package second.account.service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import second.account.dao.AccountDAO;
 import second.account.dto.AccountDTO;
 import second.account.dto.AccountIncomeVO;
-import second.sample.user.UserVO;
 
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
@@ -32,8 +29,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<AccountDTO> accountListSum(UserVO vo) throws Exception {
-		return dao.accountListSum(vo);
+	public List<AccountDTO> accountListSum(AccountDTO dto) throws Exception {
+		return dao.accountListSum(dto);
 	}
 
 	@Override
@@ -44,12 +41,6 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo) throws Exception {
 		return dao.accountIncomeList(vo);
-	}
-
-	@Override
-	public String dateCal() throws Exception {
-		String date = LocalDate.now().format(DateTimeFormatter.ofPattern("YYYY-MM")) + "%";
-		return date;
 	}
 
 	@Override

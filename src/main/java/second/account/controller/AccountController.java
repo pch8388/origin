@@ -34,46 +34,41 @@ public class AccountController {
 	private AccountService service;
 	
 	@RequestMapping("/account_book")
-	public void accountBook(@ModelAttribute("dto")AccountDTO dto,HttpSession session,Model model,AccountIncomeVO vo)throws Exception{
+	public void accountBook()throws Exception{
+		
+	}
+	
+	@RequestMapping("/monthIncome")
+	public ModelAndView monthIncome(@RequestParam("date")String date,HttpSession session,AccountIncomeVO vo,AccountDTO dto)throws Exception{
+		ModelAndView mav = new ModelAndView("jsonView");
 		UserVO uvo = (UserVO)session.getAttribute("login");
 		
-		if(session.getAttribute("lookUp")==null){
-			String date = service.dateCal();
-			vo.setIncome_date(date);
-		}else{
-			vo.setIncome_date((String)session.getAttribute("lookUp"));
-		}
+		vo.setIncome_date(date);
 		vo.setId(uvo.getId());
-		String monthIncome = service.monthIncome(vo);       //수입합산
+		String monthIncome = service.monthIncome(vo);
 		if(monthIncome==null){
 			monthIncome = "0";
 		}
-		model.addAttribute("monthIncome",monthIncome);
-		dto.setAccount_date(vo.getIncome_date());
+		mav.addObject("monthIncome", monthIncome);
+		dto.setAccount_date(date);
 		dto.setId(uvo.getId());
-		AccountDTO dtoSum = service.monthSpend(dto);       //지출합산
+		AccountDTO dtoSum = service.monthSpend(dto);
 		if(dtoSum!=null){
-			model.addAttribute("dtoSum", dtoSum);
+			mav.addObject("dtoSum", dtoSum);
 			int sub = Integer.parseInt(monthIncome) - dtoSum.getMoney();
-			model.addAttribute("sub", sub);	
+			mav.addObject("sub", sub);
 		}else{
 			dtoSum = new AccountDTO();
 			dtoSum.setCard("0");
 			dtoSum.setCash("0");
 			dtoSum.setMoney(0);
-			model.addAttribute("dtoSum", dtoSum);
+			mav.addObject("dtoSum", dtoSum);
 			int sub = Integer.parseInt(monthIncome);
-			model.addAttribute("sub", sub);
+			mav.addObject("sub",sub);
 		}
+		return mav;
 	}
 	
-	@RequestMapping("/account_lookup")
-	public String accountLookup(@RequestParam("yearDate")String year,@RequestParam("monthDate")String month,HttpSession session)throws Exception{
-		String lookUp = year+"-"+month+"%";
-		
-		session.setAttribute("lookUp", lookUp);
-		return "redirect:/account/account_book";
-	}
 	
 	@RequestMapping("/account_save")
 	public ModelAndView accountSave(AccountDTO dto,Model model) throws Exception{
@@ -96,6 +91,7 @@ public class AccountController {
 		
 		String strPageIndex = (String)req.getParameter("PAGE_INDEX");
 		String strPageRow = (String)req.getParameter("PAGE_ROW");
+		String date = (String)req.getParameter("date");
 		int nPageIndex = 0;
 		int nPageRow = 20;
 		
@@ -108,9 +104,10 @@ public class AccountController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("pageStart", (nPageIndex * nPageRow) + 1);
 		map.put("perPageNum",(nPageIndex * nPageRow) + nPageRow);
-		
+
 		UserVO vo = (UserVO)session.getAttribute("login");
 		map.put("id", vo.getId());
+		map.put("account_date", date);
 		
 		List<AccountDTO> list = service.accountList(map);
 		
@@ -123,19 +120,16 @@ public class AccountController {
 		
 		return mav;
 	}
-	@RequestMapping("/account_chart")
-	public void accountChart(@ModelAttribute("vo")UserVO vo) throws Exception{
-		
-	}
 	
 	@RequestMapping("/account_chart_draw")
-	public ModelAndView account_chart_draw(@RequestParam("id")String id) throws Exception{
+	public ModelAndView account_chart_draw(@RequestParam("id")String id,@RequestParam("date")String date,HttpSession session,HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("jsonView");
 		
-		UserVO vo = new UserVO();
-		vo.setId(id);
+		AccountDTO dto = new AccountDTO();
+		dto.setId(id);
+		dto.setAccount_date(date);
 
-		List<AccountDTO> list = service.accountListSum(vo);
+		List<AccountDTO> list = service.accountListSum(dto);
 		JSONObject ajaxObjCols1 = new JSONObject();
 		JSONObject ajaxObjCols2 = new JSONObject();
 		JSONArray ajaxArryCols = new JSONArray();
@@ -149,11 +143,11 @@ public class AccountController {
 		ajaxArryCols.add(ajaxObjCols1);
 		ajaxArryCols.add(ajaxObjCols2);
 		
-		for(AccountDTO dto : list){
+		for(AccountDTO dtos : list){
 			JSONObject name = new JSONObject();
-			name.put("v", dto.getClassification());
+			name.put("v", dtos.getClassification());
 			JSONObject money = new JSONObject();
-			money.put("v", dto.getMoney());
+			money.put("v", dtos.getMoney());
 			JSONArray row = new JSONArray();
 			row.add(name);
 			row.add(money);
