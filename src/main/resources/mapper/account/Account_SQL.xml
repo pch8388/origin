@@ -17,7 +17,7 @@
 			)	
 			VALUES
 			(
-				seq_sc_account_idx.nextval,
+				(select max(idx)+1 from sc_account a),
 				#{account_date},
 				#{use_detail},
 				#{cash},
@@ -33,7 +33,6 @@
 		<include refid="common.pagingPre" />
 		<![CDATA[
 			SELECT
-				ROW_NUMBER() OVER (ORDER BY id DESC) RNUM,
 				idx,
 				account_date,
 				use_detail,
@@ -46,6 +45,7 @@
 				sc_account
 			WHERE
 				id = #{id} and account_date like #{account_date}
+			ORDER BY id DESC
 		]]>
 		<include refid="common.pagingPost" />
 	</select>
@@ -75,7 +75,7 @@
 			)
 			VALUES
 			(
-				seq_sc_accountincom_idx.nextval,
+				(select max(idx)+1 from sc_accountincome a),
 				#{salary},
 				#{income},
 				#{id},

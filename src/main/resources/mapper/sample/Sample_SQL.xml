@@ -7,23 +7,23 @@
 		<include refid="common.pagingPre" />
 		<![CDATA[
 			SELECT
-				ROW_NUMBER() OVER (ORDER BY IDX DESC) RNUM,
 				IDX,
 				TITLE,
 				CREA_ID,
 				HIT_CNT,
-				TO_CHAR(CREA_DTM, 'YYYY.MM.DD') AS CREA_DTM
+				DATE_FORMAT(CREA_DTM, '%Y.%m.%d') AS CREA_DTM
 			FROM
 				SC_BOARD
 			WHERE
 				DEL_GB = 'N'
+			ORDER BY IDX DESC
 		]]>
 		<include refid="common.pagingPost" />
 	</select>
 	
 	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
 		<selectKey keyProperty="IDX" resultType="string" order="BEFORE">
-			SELECT SEQ_SC_BOARD_IDX.NEXTVAL FROM DUAL
+			select max(idx)+1 from sc_board
 		</selectKey>
 		<![CDATA[
 			INSERT INTO SC_BOARD
@@ -43,17 +43,37 @@
 				#{CONTENTS},
 				0,
 				'N',
-				SYSDATE,
+				current_timestamp,
 				#{id}
 			)
 		]]>
 	</insert>
 	
+	<insert id="insertFile" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO SC_FILE
+			(
+				IDX,
+				BOARD_IDX,
+				ORIGINAL_FILE_NAME,
+				STORED_FILE_NAME,
+				FILE_SIZE
+			)
+			VALUES
+			(
+				(select max(idx)+1 from sc_file a),
+				#{BOARD_IDX},
+				#{ORIGINAL_FILE_NAME},
+				#{STORED_FILE_NAME},
+				#{FILE_SIZE}
+			)
+		]]>
+	</insert>	
 	<update id="updateHitCnt" parameterType="hashmap">
 		<![CDATA[
 			UPDATE SC_BOARD
 			SET
-				HIT_CNT = NVL(HIT_CNT,0) + 1
+				HIT_CNT = COALESCE(HIT_CNT,0) + 1
 			WHERE
 				IDX = #{IDX}
 		]]>
@@ -95,29 +115,7 @@
 				IDX = #{IDX}
 		]]>
 	</update>
-	
-	<insert id="insertFile" parameterType="hashmap">
-		<![CDATA[
-			INSERT INTO SC_FILE
-			(
-				IDX,
-				BOARD_IDX,
-				ORIGINAL_FILE_NAME,
-				STORED_FILE_NAME,
-				FILE_SIZE,
-				CREA_ID
-			)
-			VALUES
-			(
-				SEQ_SC_FILE_IDX.NEXTVAL,
-				#{BOARD_IDX},
-				#{ORIGINAL_FILE_NAME},
-				#{STORED_FILE_NAME},
-				#{FILE_SIZE},
-				'Admin'
-			)
-		]]>
-	</insert>
+
 	
 	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[

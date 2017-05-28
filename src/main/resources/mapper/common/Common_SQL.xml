@@ -17,22 +17,20 @@
 	
 	<sql id="pagingPre">
 		<![CDATA[
-			SELECT
-				AAA.*
-			FROM(
-				SELECT
-					COUNT(*) OVER() AS TOTAL_COUNT,
-					AA.*
-				FROM(
+			select @rownum as TOTAL_COUNT, AAA.*
+			from(
+				select
+					@rownum := @rownum + 1 as RNUM, AA.*
+				from(
 		]]>
 	</sql>
 	
 	<sql id="pagingPost">
 		<![CDATA[
-				)AA
+				)AA,(select @rownum := 0) temp
 			)AAA
 			WHERE
-				AAA.RNUM BETWEEN #{pageStart} AND #{perPageNum}
+				AAA.RNUM limit #{pageStart}, 20
 		]]>
 	</sql>
 </mapper>

@@ -29,7 +29,7 @@ public class FileUtils {
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		Map<String,Object> listMap = null;
 		
-		String boardIdx = (String)map.get("IDX");
+		String boardIdx = String.valueOf(map.get("IDX"));
 		
 		File file = new File(filePath);
 		if(file.exists() == false){

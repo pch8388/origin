@@ -102,7 +102,7 @@ public class AccountController {
 			nPageRow = Integer.parseInt(strPageRow);
 		} 
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("pageStart", (nPageIndex * nPageRow) + 1);
+		map.put("pageStart", (nPageIndex * nPageRow));
 		map.put("perPageNum",(nPageIndex * nPageRow) + nPageRow);
 
 		UserVO vo = (UserVO)session.getAttribute("login");

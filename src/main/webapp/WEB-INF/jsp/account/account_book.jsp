@@ -14,7 +14,7 @@
             <!-- Sidebar -->
     <div id="sidebar-wrapper">
        <ul class="sidebar-nav" id="sidebar">
-
+		
        </ul>
     </div>
 
@@ -127,10 +127,6 @@
 			e.preventDefault();
 			fn_saveAccount();
 		});
-		$("a[name='account_income']").on("click",function(e){
-			e.preventDefault();
-			fn_accountIncome();
-		});
 		$("#chkAll").on("click",function(){
 			if($("#chkAll").prop("checked")){
 				$("input[name='chk']").prop("checked",true);
@@ -185,6 +181,7 @@
 			type: "POST",
 			success: function(data){
 				fn_accountList(1,todayYearMonth);
+				google.charts.setOnLoadCallback(drawChart);
 			}
 		});
 	}
@@ -197,6 +194,7 @@
 			data: formData,
 			success: function(data){
 				fn_accountList(1,todayYearMonth);
+				google.charts.setOnLoadCallback(drawChart);
 				$("#frm")[0].reset();
 			}
 		});
@@ -229,7 +227,7 @@
 		var dtoSum = data.dtoSum;
 		var body =$("#sidebar");
 		body.empty();
-		var str = "<li><a href='#this' name='account_income' class='btn btn-primary'>수입입력</a></li>" +
+		var str = "<li><a href='#this' onclick='fn_accountIncome()' class='btn btn-primary'>수입입력</a></li>" +
 					"<li><a>이달의 수입 <br>&nbsp;&nbsp;&nbsp;" + data.monthIncome + "원</a><br></li>" +
 					"<li><a>지출<br>" +
 					"&nbsp;&nbsp;&nbsp;" + dtoSum.money + "원<br>" +

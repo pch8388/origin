@@ -66,7 +66,7 @@ public class AbstractDAO {
 		String strPageIndex = (String)map.get("PAGE_INDEX");
 		String strPageRow = (String)map.get("PAGE_ROW");
 		int nPageIndex = 0;
-		int nPageRow = 20;
+		int nPageRow = 15;
 		
 		if(StringUtils.isEmpty(strPageIndex) == false){
 			nPageIndex = Integer.parseInt(strPageIndex) - 1;
@@ -74,7 +74,7 @@ public class AbstractDAO {
 		if(StringUtils.isEmpty(strPageRow) == false){
 			nPageRow = Integer.parseInt(strPageRow);
 		}
-		map.put("pageStart", (nPageIndex * nPageRow) + 1);
+		map.put("pageStart", (nPageIndex * nPageRow));
 		map.put("perPageNum", (nPageIndex * nPageRow) + nPageRow);
 		
 		return sqlSession.selectList(queryId, map);
