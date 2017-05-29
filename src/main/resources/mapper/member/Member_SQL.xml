@@ -10,7 +10,7 @@
 			pw,
 			name
 		FROM
-			SC_MEMBER
+			sc_member
 		WHERE
 			id = #{id} AND pw = #{pw}
 	]]>
@@ -18,7 +18,7 @@
 
 	<insert id="join" parameterType="second.sample.user.UserVO">
 	<![CDATA[
-		INSERT INTO SC_MEMBER
+		INSERT INTO sc_member
 		(
 			ID,
 			PW,
@@ -39,7 +39,7 @@
 		SELECT
 			id
 		FROM
-			SC_MEMBER
+			sc_member
 		WHERE
 			id = #{id}
 	]]>

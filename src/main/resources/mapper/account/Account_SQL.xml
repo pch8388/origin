@@ -4,7 +4,7 @@
 <mapper namespace="account">
 	<insert id="accountSave">
 		<![CDATA[
-			INSERT INTO SC_ACCOUNT
+			INSERT INTO sc_account
 			(
 				idx,
 				account_date,
@@ -65,7 +65,7 @@
 	
 	<insert id="accountIncomeSave">
 		<![CDATA[
-			INSERT INTO SC_ACCOUNTINCOME
+			INSERT INTO sc_accountincome
 			(
 				idx,
 				salary,
@@ -86,7 +86,7 @@
 	
 	<select id="accountIncomeList" resultType="second.account.dto.AccountIncomeVO">
 		<![CDATA[
-			SELECT * FROM SC_ACCOUNTINCOME
+			SELECT * FROM sc_accountincome
 		]]>
 	</select>
 	
@@ -95,7 +95,7 @@
 			SELECT
 				sum(salary+income) monthIncome
 			FROM
-		 		SC_ACCOUNTINCOME
+		 		sc_accountincome
 		 	WHERE
 		 		income_date like #{income_date} and id = #{id}
 		 	GROUP BY id
@@ -109,7 +109,7 @@
 				sum(card) card,
 				sum(cash+card) money
 			FROM
-				SC_ACCOUNT
+				sc_account
 			WHERE
 				account_date like #{account_date} and id = #{id}
 		]]>
@@ -119,7 +119,7 @@
 		<![CDATA[
 			DELETE
 			FROM
-				SC_ACCOUNT
+				sc_account
 			WHERE
 				idx = #{checkBoxValues}
 		]]>

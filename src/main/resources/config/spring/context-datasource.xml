@@ -17,7 +17,13 @@
         <property name="username" value="pch"/>
         <property name="password" value="pch"/>
     </bean>
-    
+
+<!--     <bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://testdb.c3bqgmg1wkus.ap-northeast-2.rds.amazonaws.com:3306/testdb1"/>
+        <property name="username" value="pch"/>
+        <property name="password" value="pch"/>
+    </bean> -->    
          
     <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
         <constructor-arg ref="dataSourceSpied" />

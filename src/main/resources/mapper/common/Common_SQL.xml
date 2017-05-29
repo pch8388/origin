@@ -9,7 +9,7 @@
 				STORED_FILE_NAME,
 				ORIGINAL_FILE_NAME
 			FROM
-				SC_FILE
+				sc_file
 			WHERE
 				IDX = #{IDX}
 		]]>
