@@ -16,12 +16,14 @@ public interface AccountDAO {
 
 	public void accountIncomeSave(AccountIncomeVO vo) throws Exception;
 
-	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo)throws Exception;
+	public List<AccountIncomeVO> accountIncomeList(Map<String,Object> map)throws Exception;
 
 	public String monthIncome(AccountIncomeVO vo) throws Exception;
 
 	public AccountDTO monthSpend(AccountDTO dto) throws Exception;
 
 	public void accountDelete(String checkBoxValues) throws Exception;
+
+	public void incomeDelete(String checkBoxValues) throws Exception;
 
 }

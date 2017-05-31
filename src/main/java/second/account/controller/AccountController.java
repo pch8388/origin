@@ -178,19 +178,58 @@ public class AccountController {
 		return "redirect:/account/account_income";
 	}
 	
+	@RequestMapping("/account_incomeList")
+	public ModelAndView accountIncomeLists(HttpSession session,HttpServletRequest req)throws Exception{
+		ModelAndView mav = new ModelAndView("jsonView");
+		
+		String strPageIndex = (String)req.getParameter("PAGE_INDEX");
+		String strPageRow = (String)req.getParameter("PAGE_ROW");
+
+		int nPageIndex = 0;
+		int nPageRow = 20;
+		
+		if(StringUtils.isEmpty(strPageIndex) == false){
+			nPageIndex = Integer.parseInt(strPageIndex) - 1;
+		}
+		if(StringUtils.isEmpty(strPageRow) == false){
+			nPageRow = Integer.parseInt(strPageRow);
+		} 
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("pageStart", (nPageIndex * nPageRow));
+		map.put("perPageNum",(nPageIndex * nPageRow) + nPageRow);
+
+		UserVO vo = (UserVO)session.getAttribute("login");
+		map.put("id", vo.getId());
+		
+		List<AccountIncomeVO> list = service.accountIncomeList(map);
+		
+		mav.addObject("list", list);
+		if(list.size() > 0){
+			mav.addObject("TOTAL", list.get(0).getTOTAL_COUNT());
+		}else{
+			mav.addObject("TOTAL", 0);
+		}
+		
+		
+		return mav;
+	}
+	@RequestMapping("/income_delete")
+	public ModelAndView incomeDelete(@RequestParam("checkBoxValues[]")List<String> arrayParams)throws Exception{
+		ModelAndView mav = new ModelAndView("jsonView");
+	
+		service.incomeDelete(arrayParams);
+		mav.addObject(true);
+		return mav;
+	}
+	
 	@RequestMapping("/account_income_list")
-	public String accountIncomeList(AccountIncomeVO vo,Model model) throws Exception{
-		
-		List<AccountIncomeVO> list = service.accountIncomeList(vo);
-		
-		model.addAttribute("list", list);
-		return "/account/account_income_list";
+	public void accountIncomeList(AccountIncomeVO vo,Model model) throws Exception{
 	}
 	
 	@RequestMapping("/account_delete")
 	public ModelAndView accountDelete(@RequestParam("checkBoxValues[]")List<String> arrayParams)throws Exception{
 		ModelAndView mav = new ModelAndView("jsonView");
-		log.info("arrayparams : "+arrayParams);
+
 		service.accountDelete(arrayParams);
 		mav.addObject(true);
 		return mav;

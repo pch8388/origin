@@ -64,6 +64,7 @@ function ComAjax(opt_formId){
 		$.ajax({
 			url : this.url,
 			type : "POST",
+			async: false,
 			data : this.param,
 			success : function(data){
 				if(typeof(gfv_ajaxCallback) == "function"){

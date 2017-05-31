@@ -85,9 +85,21 @@
 	</insert>
 	
 	<select id="accountIncomeList" resultType="second.account.dto.AccountIncomeVO">
+		<include refid="common.pagingPre" />
 		<![CDATA[
-			SELECT * FROM sc_accountincome
+			SELECT
+				idx,
+				salary,
+				income,
+				income_date,
+				id
+			FROM
+				sc_accountincome
+			WHERE
+				id = #{id}
+			ORDER BY id DESC
 		]]>
+		<include refid="common.pagingPost" />
 	</select>
 	
 	<select id="monthIncome" resultType="string">
@@ -120,6 +132,16 @@
 			DELETE
 			FROM
 				sc_account
+			WHERE
+				idx = #{checkBoxValues}
+		]]>
+	</delete>
+	
+	<delete id="incomeDelete">
+		<![CDATA[
+			DELETE
+			FROM
+				sc_accountincome
 			WHERE
 				idx = #{checkBoxValues}
 		]]>

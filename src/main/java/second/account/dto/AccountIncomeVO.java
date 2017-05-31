@@ -7,7 +7,15 @@ public class AccountIncomeVO {
 	private String id;
 	private String income_date;
 	private int idx;
+	private int TOTAL_COUNT;
 	
+	
+	public int getTOTAL_COUNT() {
+		return TOTAL_COUNT;
+	}
+	public void setTOTAL_COUNT(int tOTAL_COUNT) {
+		TOTAL_COUNT = tOTAL_COUNT;
+	}
 	public int getIdx() {
 		return idx;
 	}

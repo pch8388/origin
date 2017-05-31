@@ -37,8 +37,8 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo) throws Exception {
-		return sqlSession.selectList("account.accountIncomeList", vo);
+	public List<AccountIncomeVO> accountIncomeList(Map<String,Object> map) throws Exception {
+		return sqlSession.selectList("account.accountIncomeList", map);
 	}
 
 	@Override
@@ -54,5 +54,10 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public void accountDelete(String checkBoxValues) throws Exception {
 		sqlSession.delete("account.accountDelete", checkBoxValues);
+	}
+
+	@Override
+	public void incomeDelete(String checkBoxValues) throws Exception {
+		sqlSession.delete("account.incomeDelete",checkBoxValues);
 	}
 }

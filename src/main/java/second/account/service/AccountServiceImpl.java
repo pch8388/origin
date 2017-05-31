@@ -39,8 +39,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<AccountIncomeVO> accountIncomeList(AccountIncomeVO vo) throws Exception {
-		return dao.accountIncomeList(vo);
+	public List<AccountIncomeVO> accountIncomeList(Map<String,Object> map) throws Exception {
+		return dao.accountIncomeList(map);
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class AccountServiceImpl implements AccountService {
 		while(it.hasNext()){
 			String checkBoxValues = (String)it.next();
 			dao.accountDelete(checkBoxValues);
+		}
+	}
+
+	@Override
+	public void incomeDelete(List<String> arrayParams) throws Exception {
+		Iterator<String> it = arrayParams.iterator();
+		
+		while(it.hasNext()){
+			String checkBoxValues = (String)it.next();
+			dao.incomeDelete(checkBoxValues);
 		}
 	}
 
