@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,9 +29,12 @@ import second.common.service.CommonService;
 
 @Controller
 public class CommonController {
-	private static final String BURKETNAME = "pch8388";
-	private static final String ACCESS_KEY = "AKIAIWASEEEIZHDIZ2EA";
-	private static final String SECRET_KEY = "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";
+	@Value("#{config['burket']}")
+	private String BURKETNAME;
+	@Value("#{config['access_key']}")
+	private String ACCESS_KEY;
+	@Value("#{config['secret_key']}")
+	private String SECRET_KEY;
 	private AmazonS3 amazonS3;
 	
 	Logger log = Logger.getLogger(this.getClass());

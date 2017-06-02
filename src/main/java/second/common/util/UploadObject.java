@@ -2,6 +2,8 @@ package second.common.util;
 
 import java.io.InputStream;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -12,9 +14,12 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 
 
 public class UploadObject {
-	private static final String BURKETNAME = "pch8388";
-	private static final String ACCESS_KEY = "AKIAIWASEEEIZHDIZ2EA";
-	private static final String SECRET_KEY = "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";
+	@Value("#{config['burket']}")
+	private String BURKETNAME;
+	@Value("#{config['access_key']}")
+	private String ACCESS_KEY;
+	@Value("#{config['secret_key']}")
+	private String SECRET_KEY;
 	private AmazonS3 amazonS3;
 	
 	@SuppressWarnings("deprecation")
