@@ -8,9 +8,8 @@
 <body>
 <div class="container">
 	<form id="frm" name="frm" enctype="multipart/form-data">
-	
+	<h2>게시글 상세</h2>
 		<table class="table">
-			<h2>게시글 상세</h2>
 			<tbody>
 				<tr>
 					<th class="active">글 번호</th>

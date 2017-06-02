@@ -1,6 +1,5 @@
 package second.common.util;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,9 +12,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.amazonaws.services.s3.model.ObjectMetadata;
+
 @Component("fileUtils")	
 public class FileUtils {
-	private static final String filePath = "file\\";
+	
+	UploadObject uploadObject = null;
 	
 	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map,HttpServletRequest request) throws Exception{
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -30,11 +32,8 @@ public class FileUtils {
 		Map<String,Object> listMap = null;
 		
 		String boardIdx = String.valueOf(map.get("IDX"));
+		uploadObject = new UploadObject();
 		
-		File file = new File(filePath);
-		if(file.exists() == false){
-			file.mkdirs();
-		}
 		
 		while(iterator.hasNext()){
 			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
@@ -42,9 +41,9 @@ public class FileUtils {
 				originalFileName = multipartFile.getOriginalFilename();
 				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 				storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+				ObjectMetadata metadata = new ObjectMetadata();
 				
-				file = new File(filePath + storedFileName);
-				multipartFile.transferTo(file);
+				uploadObject.upload(storedFileName, multipartFile.getInputStream(),metadata);
 				
 				
 				listMap = new HashMap<String,Object>();
@@ -81,7 +80,10 @@ public class FileUtils {
 				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 				storedFileName = CommonUtils.getRandomString() + originalFileExtension;
 				
-				multipartFile.transferTo(new File(filePath + storedFileName));
+				uploadObject = new UploadObject();
+				
+				ObjectMetadata metadata = new ObjectMetadata();
+				uploadObject.upload(storedFileName, multipartFile.getInputStream(),metadata);
 				
 				listMap = new HashMap<String,Object>();
 				listMap.put("IS_NEW", "Y");
