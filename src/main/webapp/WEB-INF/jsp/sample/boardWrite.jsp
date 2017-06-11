@@ -54,6 +54,19 @@
 				fn_insertBoard();
 			});
 			
+			$("#file").bind("change",function(e){
+				e.preventDefault();
+				var maxSize = 5 * 1024 * 1024;
+				var fileSize = this.files[0].size;
+				var browser = navigator.appName;
+				
+				if(fileSize > maxSize){
+					alert("첨부파일 사이즈는 5MB 이내만 등록이 가능합니다.");
+					$("#file").val("");
+					return;
+				}
+			});
+			
 			$("#addFile").on("click",function(e){ //파일 추가 버튼
 				e.preventDefault();
 				fn_addFile();
@@ -89,6 +102,8 @@
 		function fn_deleteFile(obj){
 			obj.parent().remove();
 		}
+		
+		
 	</script>
 </body>
 </html>
