@@ -4,9 +4,15 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
+<script type="text/javascript" src="<c:url value='/js/jsbn.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/rsa.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/prng4.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/rng.js' />"></script>
 </head>
 <body>
 	<form id="frm" name="frm">
+	<input type="hidden" id="RSAModulus" value="${RSAModulus }" />
+	<input type="hidden" id="RSAExponent" value="${RSAExponent }" />
 	<div class="container">
 		<div class="form-group has-feedback">
 			<input type="text" name="id" id="id" class="form-control" placeholder="USER_ID" />
@@ -16,13 +22,7 @@
 			<input type="password" name="pw" id="pw" class="form-control" placeholder="PASSWORD" />
 			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 		</div>
-		<div class="row">
-			<div class="checkbox icheck">
-				<label>
-					<input type="checkbox" name="useCookie"> Remember Me
-				</label>
-			</div>
-		</div>
+		
 		<div class="col-xs-4">
 			<a href="#this" class="btn btn-primary btn-block btn-flat" id="login">Sign In</a>
 		</div>
@@ -48,16 +48,39 @@
 		function fn_loginForm(){
 			var id = $("#id").val();
 			var pw = $("#pw").val();
+			
+			if(!id || !pw){
+				alert("ID/Password를 입력해주세요.");
+				return false;
+			}
+			
+			try{
+				var rsaPublicKeyModulus = $("#RSAModulus").val();
+				var rsaPublicKeyExponent = $("#RSAExponent").val();
+				fn_submitEncrytedForm(id,pw,rsaPublicKeyModulus,rsaPublicKeyExponent);
+			}catch(err){
+				alert(err);
+			}
+			
+			return false;
+		}
+		
+		function fn_submitEncrytedForm(id,pw,rsaPublicKeyModulus,rsaPublicKeyExponent){
+			var rsa = new RSAKey();
+			rsa.setPublic(rsaPublicKeyModulus,rsaPublicKeyExponent);
+			
+			//RSA 암호화
+			var securedId = rsa.encrypt(id);
+			var securedPw = rsa.encrypt(pw);
+			
 			$.ajax({
 				url: "/user/loginCheck",
 				type: "POST",
-				data: {"id":id , "pw":pw},
+				data: {"id":securedId , "pw":securedPw},
 				success: function(data){
 					if(data.pw){
 						console.log(data);
-						var comSubmit = new ComSubmit("frm");
-						comSubmit.setUrl("<c:url value='/user/loginPost' />");
-						comSubmit.submit();			
+						location.href= "/";
 					}else{
 						console.log(data);
 						alert("아이디, 비밀번호를 확인해주세요");
@@ -65,9 +88,8 @@
 					}
 				}
 			});
-				
 		}
-		
+			
 		function fn_joinForm(){
 			location.href="/user/join";
 		}

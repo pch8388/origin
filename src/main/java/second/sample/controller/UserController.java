@@ -1,7 +1,22 @@
 package second.sample.controller;
 
-import javax.annotation.Resource;
+import java.io.IOException;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,33 +32,68 @@ import second.sample.user.UserVO;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+	private Logger log = LoggerFactory.getLogger(UserController.class);
 	
 	@Resource(name="userService")
 	private UserService service;
 	
-	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public void loginGET(@ModelAttribute("dto") LoginDTO dto){
+	@RequestMapping(value="/login")
+	public String loginGET(HttpServletRequest request,HttpServletResponse response)throws IOException, NoSuchAlgorithmException, InvalidKeySpecException{
+		HttpSession session = request.getSession();
 		
+		KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+		generator.initialize(1024);
+		KeyPair keyPair = generator.generateKeyPair();
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		PublicKey publicKey = keyPair.getPublic();
+		PrivateKey privateKey = keyPair.getPrivate();
+		
+		session.setAttribute("_RSA_WEB_Key_", privateKey);   //세션에 RSA개인키 저장
+		
+		RSAPublicKeySpec publicSpec = (RSAPublicKeySpec)keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
+		String publicKeyModulus = publicSpec.getModulus().toString(16);
+		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+		
+		request.setAttribute("RSAModulus", publicKeyModulus);
+		request.setAttribute("RSAExponent", publicKeyExponent);
+		
+		return "/user/login";
 	}
 	
-	@RequestMapping(value="/loginCheck",method=RequestMethod.POST)
-	public ModelAndView loginCheck(@RequestParam("id")String id,@RequestParam("pw")String pw)throws Exception{
+	@RequestMapping(value="/loginCheck")
+	public ModelAndView loginCheck(HttpServletRequest request,@RequestParam("id")String id,@RequestParam("pw")String pw)throws Exception{
 		ModelAndView mav = new ModelAndView("jsonView");
-		LoginDTO dto = new LoginDTO();
-
-		dto.setId(id);
-		dto.setPw(pw);
-		UserVO vo = service.login(dto);
-		if(vo == null){
+		
+		HttpSession session = request.getSession();
+		
+		PrivateKey privateKey = (PrivateKey) session.getAttribute("_RSA_WEB_Key_");  //세션에 저장된 개인키 가져옴
+		log.info("id: " +id);
+		log.info("pw: " +pw);
+		if(privateKey == null){
 			mav.addObject("pw", false);
 		}else{
-			mav.addObject("pw", true);
+			try{
+				//복호화 처리
+				String uid = service.decryptRsa(privateKey, id);
+				String pwd = service.decryptRsa(privateKey, pw);
+				LoginDTO dto = new LoginDTO();
+				dto.setId(uid);
+				dto.setPw(pwd);
+				UserVO vo = service.login(dto);
+				if(vo == null){
+					mav.addObject("pw", false);
+				}else{
+					mav.addObject("pw", true);
+				}
+			}catch(Exception e){
+				mav.addObject("pw", false);
+			}
 		}
+
 		return mav;
 	}
 	
-	@RequestMapping(value="/loginPost",method=RequestMethod.POST)
+	@RequestMapping(value="/loginPost")
 	public void loginPOST(LoginDTO dto,Model model) throws Exception{
 		UserVO vo = service.login(dto);
 		
