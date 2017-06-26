@@ -94,14 +94,13 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/loginPost")
-	public void loginPOST(LoginDTO dto,Model model) throws Exception{
-		UserVO vo = service.login(dto);
-		
-		if(vo == null){
-			return;
+	public void loginPOST(@RequestParam("id")String id,Model model) throws Exception{
+		UserVO vo = service.idCheck(id);
+		if(vo.getId() == null){
+			model.addAttribute("userVO", null);
+		}else{
+			model.addAttribute("userVO", vo);
 		}
-		
-		model.addAttribute("userVO", vo);
 	}
 	
 	@RequestMapping(value="/join",method=RequestMethod.GET)

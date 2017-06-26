@@ -80,7 +80,10 @@
 				success: function(data){
 					if(data.pw){
 						console.log(data);
-						location.href= "/";
+						var comSubmit = new ComSubmit();
+						comSubmit.setUrl("/user/loginPost");
+						comSubmit.addParam("id",id);
+						comSubmit.submit();
 					}else{
 						console.log(data);
 						alert("아이디, 비밀번호를 확인해주세요");
