@@ -74,4 +74,14 @@ public class SampleServiceImpl implements SampleService {
 			sampleDAO.insertFile(list.get(i));
 		}
 	}
+
+	@Override
+	public void replyBoard(Map<String, Object> map,HttpServletRequest request) throws Exception {
+		sampleDAO.replyBoard(map);
+		
+		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
+		for(int i=0,size=list.size(); i<size; i++){
+			sampleDAO.insertFile(list.get(i));
+		}
+	}
 }

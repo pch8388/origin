@@ -53,4 +53,8 @@ public class SampleDAO extends AbstractDAO{
 		update("sample.updateFile",map);
 	}
 
+	public void replyBoard(Map<String, Object> map) throws Exception{
+		insert("sample.replyBoard",map);
+	}
+
 }

@@ -50,6 +50,16 @@ public class SampleController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/sample/boardReply")
+	public ModelAndView boardReply(CommandMap commandMap) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		
+		Map<String,Object> map = sampleService.selectBoardDetail(commandMap.getMap());
+		mav.addObject("map",map.get("map"));
+		mav.setViewName("/sample/boardReply");
+		
+		return mav;
+	}
 	
 	@RequestMapping(value="/sample/testMapArgumentResolver")
 	public ModelAndView testMapArgumentResolver(CommandMap commandMap) throws Exception{
@@ -76,6 +86,9 @@ public class SampleController {
 	@RequestMapping(value="/sample/insertBoard")
 	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList");
+		
+		String contents = ((String)commandMap.get("CONTENTS")).replace("\r\n","<br>");
+		commandMap.put("CONTENTS", contents);
 		
 		sampleService.insertBoard(commandMap.getMap(),request);
 		
@@ -121,5 +134,17 @@ public class SampleController {
 		sampleService.deleteBoard(commandMap.getMap());
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="/sample/replyBoard")
+	public ModelAndView replyBoard(CommandMap commandMap,HttpServletRequest request) throws Exception{
+		ModelAndView mav = new ModelAndView("redirect:/sample/openBoardList");
+		
+		String contents = ((String)commandMap.get("CONTENTS")).replace("\r\n","<br>");
+		commandMap.put("CONTENTS", contents);
+		
+		sampleService.replyBoard(commandMap.getMap(),request);
+		
+		return mav;
 	}
 }

@@ -11,12 +11,15 @@
 				TITLE,
 				CREA_ID,
 				HIT_CNT,
+				AGROUP,
+				STEP,
+				INDENT,
 				DATE_FORMAT(CREA_DTM, '%Y.%m.%d') AS CREA_DTM
 			FROM
 				sc_board
 			WHERE
 				DEL_GB = 'N'
-			ORDER BY IDX DESC
+			ORDER BY AGROUP DESC, STEP ASC
 		]]>
 		<include refid="common.pagingPost" />
 	</select>
@@ -34,7 +37,10 @@
 				HIT_CNT,
 				DEL_GB,
 				CREA_DTM,
-				CREA_ID
+				CREA_ID,
+				AGROUP,
+				STEP,
+				INDENT
 			)
 			VALUES
 			(
@@ -44,7 +50,41 @@
 				0,
 				'N',
 				current_timestamp,
-				#{id}
+				#{id},
+				#{IDX},
+				0,
+				0
+			)
+		]]>
+	</insert>
+	
+	<insert id="replyBoard" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO sc_board
+			(
+				IDX,
+				TITLE,
+				CONTENTS,
+				HIT_CNT,
+				DEL_GB,
+				CREA_DTM,
+				CREA_ID,
+				AGROUP,
+				STEP,
+				INDENT
+			)
+			VALUES
+			(
+				(select max(idx)+1 from sc_board a),
+				#{TITLE},
+				#{CONTENTS},
+				0,
+				'N',
+				current_timestamp,
+				#{id},
+				#{AGROUP},
+				#{STEP} + 1,
+				#{INDENT} + 1
 			)
 		]]>
 	</insert>
@@ -87,7 +127,10 @@
 				CREA_ID,
 				CREA_DTM,
 				TITLE,
-				CONTENTS
+				CONTENTS,
+				AGROUP,
+				INDENT,
+				STEP
 			FROM
 				sc_board
 			WHERE

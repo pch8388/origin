@@ -82,10 +82,21 @@
 				gfn_renderPaging(params);
 				
 				var str = "";
+
 				$.each(data.list, function(key,value){
+					var indent = parseInt(value.INDENT);
+					var space = "";
+					for(var i=0; i<value.STEP; i++){
+						space += "&nbsp;&nbsp;"
+					}
+					if(indent!=0){
+						space += "ㄴ";
+					}
+					console.log(space);
 					str += "<tr>" +
 								"<td>" + value.IDX + "</td>" +
 								"<td class='title'>" +
+									space +			
 									"<a href='#this' name='title'>" + value.TITLE + "</a>" +
 									"<input type='hidden' name='title' id='IDX' value=" + value.IDX + ">" +
 								"</td>" +

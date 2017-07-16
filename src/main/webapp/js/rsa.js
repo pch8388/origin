@@ -27,13 +27,14 @@ function byte2Hex(b) {
 // PKCS#1 (type 2, random) pad input string s to n bytes, and return a bigint
 function pkcs1pad2(s,n) {
   if(n < s.length + 11) { // TODO: fix for utf-8
-    console.error("Message too long for RSA");
+    alert("Message too long for RSA");
     return null;
   }
   var ba = new Array();
   var i = s.length - 1;
   while(i >= 0 && n > 0) {
     var c = s.charCodeAt(i--);
+    
     if(c < 128) { // encode using utf-8
       ba[--n] = c;
     }
@@ -79,7 +80,7 @@ function RSASetPublic(N,E) {
     this.e = parseInt(E,16);
   }
   else
-    console.error("Invalid RSA public key");
+    alert("Invalid RSA public key");
 }
 
 // Perform raw public operation on "x": return x^e (mod n)

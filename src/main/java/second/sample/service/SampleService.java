@@ -18,4 +18,6 @@ public interface SampleService {
 
 	void deleteBoard(Map<String, Object> map) throws Exception;
 
+	void replyBoard(Map<String, Object> map,HttpServletRequest request) throws Exception;
+
 }

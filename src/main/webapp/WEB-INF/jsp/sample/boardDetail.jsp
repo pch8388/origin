@@ -8,8 +8,8 @@
 </head>
 <body>
 <div class="container">
+<h2>게시글 상세</h2>
 	<table class="table">
-		<h2>게시글 상세</h2>
 		<tbody>
 			<tr>
 				<th class="active">글 번호</th>
@@ -51,6 +51,7 @@
 	</table>
 	
 	<a href="#this" class="btn btn-default pull-right" id="list">목록으로</a>
+	<a href="#this" class="btn btn-default pull-right" id="reply">답글달기</a>
 	<c:if test="${login.id == map.CREA_ID }">
 		<a href="#this" class="btn btn-default" id="update">수정하기</a>
 	</c:if>
@@ -61,6 +62,11 @@
 			$("#list").on("click",function(e){ //목록으로 버튼
 				e.preventDefault();
 				fn_openBoardList();
+			});
+			
+			$("#reply").on("click",function(e){ //답글달기 버튼
+				e.preventDefault();
+				fn_boardReply();
 			});
 		
 			$("#update").on("click",function(e){ //수정하기 버튼
@@ -79,6 +85,15 @@
 			comSubmit.setUrl("<c:url value='/sample/openBoardList' />");
 			comSubmit.submit();
 		}
+		
+		function fn_boardReply(){
+			var idx = "${map.IDX}";
+			var comSubmit = new ComSubmit();
+			comSubmit.setUrl("<c:url value='/sample/boardReply' />");
+			comSubmit.addParam("IDX",idx);
+			comSubmit.submit();
+		}
+		
 		function fn_openBoardUpdate(){
 			var idx = "${map.IDX}";
 			var comSubmit = new ComSubmit();
