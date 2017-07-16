@@ -18,7 +18,9 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 @Component("fileUtils")	
 public class FileUtils {
 	
-	private static final String filePath = "C:\\dev\\file\\";
+	/*test
+	 * 
+	 * private static final String filePath = "C:\\dev\\file\\";
 	
 	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map,HttpServletRequest request) throws Exception{
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -60,12 +62,13 @@ public class FileUtils {
 		return list;
 	}
 	
+	*/
 	
 	
-	/*
-	 * AWS S3 file upload
-	 * 
-	 * UploadObject uploadObject = null;
+	 /* AWS S3 file upload
+	 */
+	
+	UploadObject uploadObject = null;
 	
 	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map,HttpServletRequest request) throws Exception{
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -104,11 +107,13 @@ public class FileUtils {
 		}
 		return list;
 	}
-*/
+
 	
 	
 	
-	public List<Map<String, Object>> parseUpdateFileInfo(Map<String, Object> map, HttpServletRequest request) throws Exception{
+/*test
+ * 
+ * 	public List<Map<String, Object>> parseUpdateFileInfo(Map<String, Object> map, HttpServletRequest request) throws Exception{
 		MultipartHttpServletRequest multipartHttpServletReqeust = (MultipartHttpServletRequest)request;
 		Iterator<String> iterator = multipartHttpServletReqeust.getFileNames();
 		
@@ -155,11 +160,11 @@ public class FileUtils {
 		return list;
 	}
 	
+*/	
 	
-	/*
-	 *AWS flieUpload 
-	 * 
-	 * public List<Map<String, Object>> parseUpdateFileInfo(Map<String, Object> map, HttpServletRequest request) throws Exception{
+	/*AWS flieUpload 
+	 */ 
+ 	public List<Map<String, Object>> parseUpdateFileInfo(Map<String, Object> map, HttpServletRequest request) throws Exception{
 		MultipartHttpServletRequest multipartHttpServletReqeust = (MultipartHttpServletRequest)request;
 		Iterator<String> iterator = multipartHttpServletReqeust.getFileNames();
 		
@@ -207,5 +212,5 @@ public class FileUtils {
 			}
 		}
 		return list;
-	}*/
+	}
 }
